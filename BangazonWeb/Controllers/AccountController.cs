@@ -112,7 +112,15 @@ namespace Bangazon.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    StreetAddress = model.StreetAddress,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
