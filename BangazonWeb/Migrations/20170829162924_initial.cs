@@ -269,13 +269,13 @@ namespace Bangazon.Migrations
                         column: x => x.OrderID,
                         principalTable: "Order",
                         principalColumn: "OrderID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ProductOrder_Product_ProductID",
                         column: x => x.ProductID,
                         principalTable: "Product",
                         principalColumn: "ProductID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
