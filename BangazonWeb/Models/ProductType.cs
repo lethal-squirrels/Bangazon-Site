@@ -7,7 +7,7 @@ namespace Bangazon.Models
     public class ProductType
     {
         [Key]
-        public int ProductTypeId { get; set; }
+        public int ProductTypeID { get; set; }
 
         [Required]
         [StringLength(255)]

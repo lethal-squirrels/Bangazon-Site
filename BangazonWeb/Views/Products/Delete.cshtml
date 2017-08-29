@@ -11,12 +11,12 @@
     <h4>Product</h4>
     <hr />
     <dl class="dl-horizontal">
-        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" asp-for="ProductID" />
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -47,6 +47,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImgPath)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImgPath)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ProductType)

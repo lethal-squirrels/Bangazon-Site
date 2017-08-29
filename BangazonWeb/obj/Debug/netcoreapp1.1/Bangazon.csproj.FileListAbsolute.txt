@@ -9,3 +9,14 @@ c:\users\aarti\source\repos\BangazonWeb\BangazonWeb\obj\Debug\netcoreapp1.1\Bang
 c:\users\aarti\source\repos\BangazonWeb\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.dll
 c:\users\aarti\source\repos\BangazonWeb\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.pdb
 c:\users\aarti\source\repos\BangazonWeb\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.csprojResolveAssemblyReference.cache
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\bin\Debug\netcoreapp1.1\Bangazon.deps.json
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\bin\Debug\netcoreapp1.1\Bangazon.runtimeconfig.json
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\bin\Debug\netcoreapp1.1\Bangazon.runtimeconfig.dev.json
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\bin\Debug\netcoreapp1.1\Bangazon.dll
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\bin\Debug\netcoreapp1.1\Bangazon.pdb
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.csprojResolveAssemblyReference.cache
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.csproj.CoreCompileInputs.cache
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.AssemblyInfo.cs
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.dll
+C:\Users\FuckOff\Bangazon\Bangazon-Site\BangazonWeb\obj\Debug\netcoreapp1.1\Bangazon.pdb
