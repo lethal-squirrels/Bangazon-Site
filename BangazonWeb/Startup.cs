@@ -59,6 +59,7 @@ namespace Bangazon
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            DbInitializer.Initialize(app.ApplicationServices);
 
             if (env.IsDevelopment())
             {
