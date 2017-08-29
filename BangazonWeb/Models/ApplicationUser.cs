@@ -33,6 +33,8 @@ namespace Bangazon.Models
 
         public string Phone { get; set; }
 
-        public ICollection<Product> Products;
+        public ICollection<Product> Products { get; set;  }
+
+        public ICollection<PaymentType> PaymentType { get; set; }
     }
 }

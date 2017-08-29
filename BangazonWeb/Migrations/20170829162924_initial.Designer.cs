@@ -8,7 +8,7 @@ using Bangazon.Data;
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170829155410_initial")]
+    [Migration("20170829162924_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -332,7 +332,7 @@ namespace Bangazon.Migrations
             modelBuilder.Entity("Bangazon.Models.PaymentType", b =>
                 {
                     b.HasOne("Bangazon.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("PaymentType")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -340,12 +340,12 @@ namespace Bangazon.Migrations
             modelBuilder.Entity("Bangazon.Models.Product", b =>
                 {
                     b.HasOne("Bangazon.Models.ProductType", "ProductType")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("ProductTypeID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Bangazon.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

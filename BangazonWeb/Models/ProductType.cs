@@ -16,6 +16,6 @@ namespace Bangazon.Models
 
         public int Quantity { get; set; }
 
-        public ICollection<Product> Products;
+        public ICollection<Product> Products { get; set; }
     }
 }
