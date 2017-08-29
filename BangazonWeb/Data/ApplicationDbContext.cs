@@ -26,5 +26,9 @@ namespace Bangazon.Data
         public DbSet<Bangazon.Models.Product> Product { get; set; }
 
         public DbSet<Bangazon.Models.ProductType> ProductType { get; set; }
+
+        public DbSet<Bangazon.Models.Order> Order { get; set; }
+
+        public DbSet<Bangazon.Models.PaymentType> PaymentType { get; set; }
     }
 }

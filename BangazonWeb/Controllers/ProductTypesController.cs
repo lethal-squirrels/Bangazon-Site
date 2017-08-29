@@ -34,7 +34,7 @@ namespace Bangazon.Controllers
             }
 
             var productType = await _context.ProductType
-                .SingleOrDefaultAsync(m => m.ProductTypeId == id);
+                .SingleOrDefaultAsync(m => m.ProductTypeID == id);
             if (productType == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace Bangazon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductTypeId,Label,Quantity")] ProductType productType)
+        public async Task<IActionResult> Create([Bind("ProductTypeID,Label,Quantity")] ProductType productType)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            var productType = await _context.ProductType.SingleOrDefaultAsync(m => m.ProductTypeId == id);
+            var productType = await _context.ProductType.SingleOrDefaultAsync(m => m.ProductTypeID == id);
             if (productType == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace Bangazon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductTypeId,Label,Quantity")] ProductType productType)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductTypeID,Label,Quantity")] ProductType productType)
         {
-            if (id != productType.ProductTypeId)
+            if (id != productType.ProductTypeID)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Bangazon.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductTypeExists(productType.ProductTypeId))
+                    if (!ProductTypeExists(productType.ProductTypeID))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace Bangazon.Controllers
             }
 
             var productType = await _context.ProductType
-                .SingleOrDefaultAsync(m => m.ProductTypeId == id);
+                .SingleOrDefaultAsync(m => m.ProductTypeID == id);
             if (productType == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productType = await _context.ProductType.SingleOrDefaultAsync(m => m.ProductTypeId == id);
+            var productType = await _context.ProductType.SingleOrDefaultAsync(m => m.ProductTypeID == id);
             _context.ProductType.Remove(productType);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -147,7 +147,7 @@ namespace Bangazon.Controllers
 
         private bool ProductTypeExists(int id)
         {
-            return _context.ProductType.Any(e => e.ProductTypeId == id);
+            return _context.ProductType.Any(e => e.ProductTypeID == id);
         }
     }
 }

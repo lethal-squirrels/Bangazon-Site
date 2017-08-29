@@ -9,11 +9,11 @@ namespace Bangazon.Models
     public class Product
     {
         [Key]
-        public int ProductId { get; set; }
+        public int ProductID { get; set; }
 
         [Required]
         [StringLength(55)]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [StringLength(255)]
@@ -34,14 +34,18 @@ namespace Bangazon.Models
         public virtual ApplicationUser User { get; set; }
 
         [Required]
-        public int ProductTypeId { get; set; }
-
-        public string Location { get; set; }
+        public int ProductTypeID { get; set; }
 
         [Display(Name = "Category")]
         public ProductType ProductType { get; set; }
 
+        [StringLength(30)]
+        public string Location { get; set; }
+
         public string ImgPath { get; set; }
+
+        [Display(Name ="Line Items")]
+        public virtual ICollection<ProductOrder> LineItems { get; set; }
 
        
     }

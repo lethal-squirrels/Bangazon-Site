@@ -9,7 +9,7 @@ namespace Bangazon.Models
     public class PaymentType
     {
         [Key]
-        public int PaymentTypeId { get; set; }
+        public int PaymentTypeID { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -17,7 +17,7 @@ namespace Bangazon.Models
         public DateTime DateCreated { get; set; }
 
         [Required]
-        [StringLength(12)]
+        [StringLength(20)]
         public string Description { get; set; }
 
         [Required]
@@ -29,6 +29,6 @@ namespace Bangazon.Models
 
         [Required]
         [DefaultValue(true)]
-        public bool isActive { get; set; }
+        public bool IsActive { get; set; }
     }
 }
