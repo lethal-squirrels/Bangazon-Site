@@ -33,7 +33,8 @@ namespace Bangazon.Controllers
             var user = await GetCurrentUserAsync();
 
             var paymentTypes = _context.PaymentType
-                .Where(pt => pt.User == user).ToList();
+                .Where(pt => pt.User == user && pt.IsActive == true).ToList();
+
             if (paymentTypes == null)
             {
                 return NotFound();
@@ -161,8 +162,14 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var paymentType = await _context.PaymentType.SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            _context.PaymentType.Remove(paymentType);
-            await _context.SaveChangesAsync();
+            var paymentTypeHasBeenUsed = await _context.Order.AnyAsync(o => o.PaymentType == paymentType);
+            if (!paymentTypeHasBeenUsed)
+            {
+                _context.PaymentType.Remove(paymentType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            paymentType.IsActive = false;
             return RedirectToAction("Index");
         }
 
