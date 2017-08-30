@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -33,14 +34,22 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
+            var productTypeViewModel = new ProductTypeDetailViewModel();
+
             var productType = await _context.ProductType
                 .SingleOrDefaultAsync(m => m.ProductTypeID == id);
             if (productType == null)
             {
                 return NotFound();
             }
+            productTypeViewModel.Products = await _context.Product
+                            .Where(p =>p.ProductTypeID == id)
+                            .ToListAsync();
 
-            return View(productType);
+            productTypeViewModel.ProductType = productType;
+
+
+            return View(productTypeViewModel);
         }
 
         // GET: ProductTypes/Create
