@@ -39,10 +39,12 @@ namespace Bangazon.Controllers
 
         //POST: Products/Search
         [HttpPost]
-        public IActionResult Search(ProductSearchViewModel model)
+        public async Task<IActionResult> Search(ProductSearchViewModel model)
         {
+            model.Products = await _context.Product.ToListAsync();
             if (model.SearchRadio == "products")
             {
+              
                 if (model.Products != null)
                 {
                     model.Products = (from product in model.Products
