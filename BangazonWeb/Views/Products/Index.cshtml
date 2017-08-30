@@ -20,13 +20,14 @@
     {
         <tr>
             <td>
-                <a asp-action="Detail" asp-route-id="@product.ProductID">
+                <a asp-action="Details" asp-route-id="@product.ProductID">
                     @Html.DisplayFor(modelItem => product.Name)
                 </a>
             </td>
             <td>@Html.DisplayFor(modelItem => product.Description)</td>
             <td>@Html.DisplayFor(modelItem => product.DateCreated)</td>
             <td>@Html.DisplayFor(modelItem => product.Price)</td>
+           <td><button><a asp-action="Delete" asp-route-id="@product.ProductID">Delete</a></button></td>
         </tr>
     }
 
