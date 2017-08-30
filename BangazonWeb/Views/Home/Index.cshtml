@@ -1,5 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Bangazon.Models.HomeViewModels.HomePageViewModel
+
+@{
+    ViewData["Title"] = "Bangazon";
 }
 
-<h1> Our Super Cool Awesome Website LOL</h1>
+<h1> Welcome To Bangazon Inc. </h1>
+
+<h2>Recently Added Products</h2>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model.Product)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
