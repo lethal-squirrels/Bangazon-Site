@@ -48,3 +48,8 @@ textarea {
         display: none;
     }
 }
+
+
+.nav_radio_text {
+    color: lightgrey;
+}
