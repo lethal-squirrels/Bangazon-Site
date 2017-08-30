@@ -3,29 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Bangazon.Data;
+using Bangazon.Models.HomeViewModels;
+using Microsoft.EntityFrameworkCore;
+using Bangazon.Models;
 
 namespace Bangazon.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private  readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Index()
         {
-            ViewData["Message"] = "Your application description page.";
+            var homeview = new HomePageViewModel();
 
-            return View();
+            homeview.Product = await _context.Product
+                                .OrderByDescending(p => p.DateCreated)
+                                .Take(20)
+                                .ToListAsync();
+
+            return View(homeview);
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
 
         public IActionResult Error()
         {
