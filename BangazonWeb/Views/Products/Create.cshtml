@@ -6,7 +6,7 @@
 
 <h2>Create</h2>
 
-<form asp-action="Create">
+<form asp-action="Create" enctype="multipart/form-data">
     <div class="form-horizontal">
         <h4>Product</h4>
         <hr />
@@ -40,8 +40,8 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="Product.ProductTypeID" class="col-md-2 control-label">Product Category</label>
             <div class="col-md-10">
-                @Html.LabelFor(model => model.Product.ProductTypeID)
                 @Html.DropDownList(
                     "Product.ProductTypeID",
                     @Model.ProductTypeId,
@@ -61,15 +61,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Product.ImgPath" class="col-md-2 control-label"></label>
+            <label class="col-md-2 control-label">Upload Photo</label>
             <div class="col-md-10">
-                <input asp-for="Product.ImgPath" class="form-control" />
-                <span asp-validation-for="Product.ImgPath" class="text-danger"></span>
+                <input type="file" name="ProductPhoto"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Sell" asp-route-return-url="" class="btn btn-default" />
+                <input type="submit" value="Save" asp-route-return-url="" class="btn btn-default" />
             </div>
         </div>
     </div>
