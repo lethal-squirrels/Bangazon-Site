@@ -39,7 +39,7 @@
                     <div class="radio">
                         <label class="nav_radio_text">
 
-                            <input type="radio" name ="SearchRadio" value="products" class="nav_radio_text"> Search Products
+                            <input type="radio" name ="SearchRadio" value="products" class="nav_radio_text" checked="checked"> Search Products
 
                         </label>
                     </div>
@@ -56,14 +56,13 @@
             
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="ProductTypes" asp-action="Index">Categories</a></li>
                     @if (Context.User.Identity.IsAuthenticated)
                     {
-                    <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell A Product</a></li>
-                    <li><a asp-area="" asp-controller="Orders" asp-action="Index">Shopping Cart</a></li>
-                    <li><a asp-area="" asp-controller="Profile" asp-action="Index">My Profile</a></li>
+                        <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell a Product</a></li>
+                        <li><a asp-area="" asp-controller="Products" asp-action="Index">My Products</a></li>
+                        <li><a asp-area="" asp-controller="Orders" asp-action="Index">Shopping Cart</a></li>
+                        <li><a asp-area="" asp-controller="Profile" asp-action="Index">My Profile</a></li>
                     }
                  
                 </ul>

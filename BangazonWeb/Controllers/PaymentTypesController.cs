@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -14,27 +16,39 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public PaymentTypesController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public PaymentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: PaymentTypes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PaymentType.ToListAsync());
-        }
+            var user = await GetCurrentUserAsync();
 
-        // GET: PaymentTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            var paymentTypes = _context.PaymentType
+                .Where(pt => pt.User == user && pt.IsActive == true).ToList();
+
+            if (paymentTypes == null)
             {
                 return NotFound();
             }
 
+            return View(await _context.PaymentType.Where(pt => pt.User == user).ToListAsync());
+        }
+
+        // GET: PaymentTypes/Details/5
+        [Authorize]
+        public async Task<IActionResult> Details(int? id)
+        {
             var paymentType = await _context.PaymentType
-                .SingleOrDefaultAsync(m => m.PaymentTypeID == id);
+                .SingleOrDefaultAsync(pt => pt.PaymentTypeID == id);
             if (paymentType == null)
             {
                 return NotFound();
@@ -44,6 +58,7 @@ namespace Bangazon.Controllers
         }
 
         // GET: PaymentTypes/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -53,9 +68,16 @@ namespace Bangazon.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentTypeID,DateCreated,Description,AccountNumber,IsActive")] PaymentType paymentType)
+        public async Task<IActionResult> Create(PaymentType paymentType)
         {
+            ModelState.Remove("User");
+            ModelState.Remove("DateCreated");
+            ModelState.Remove("IsActive");
+            paymentType.User = await GetCurrentUserAsync();
+            paymentType.DateCreated = DateTime.Now;
+            paymentType.IsActive = true;
             if (ModelState.IsValid)
             {
                 _context.Add(paymentType);
@@ -140,8 +162,14 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var paymentType = await _context.PaymentType.SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            _context.PaymentType.Remove(paymentType);
-            await _context.SaveChangesAsync();
+            var paymentTypeHasBeenUsed = await _context.Order.AnyAsync(o => o.PaymentType == paymentType);
+            if (!paymentTypeHasBeenUsed)
+            {
+                _context.PaymentType.Remove(paymentType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            paymentType.IsActive = false;
             return RedirectToAction("Index");
         }
 
