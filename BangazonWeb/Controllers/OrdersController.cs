@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -14,10 +16,15 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -45,29 +52,79 @@ namespace Bangazon.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
-        public IActionResult Create()
+        public async Task<Order> CreateOrder()
         {
-            ViewData["PaymentTypeID"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeID", "AccountNumber");
-            return View();
+            var order = new Order();
+            order.User = await GetCurrentUserAsync();
+            order.DateCreated = DateTime.Now;
+
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+            return order;
         }
 
-        // POST: Orders/Create
+        // GET: Orders/Purchase/5
+        public async Task<IActionResult> Purchase(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = await GetCurrentUserAsync();
+            var order = await _context.Order.SingleOrDefaultAsync(m => m.User.Id == user.Id && m.PaymentType == null);
+            if (order == null)
+            {
+                order = await CreateOrder();
+            }
+
+            var productOrder = new ProductOrder();
+            productOrder.Order = order;
+            productOrder.Product = await _context.Product.SingleOrDefaultAsync(p => p.ProductID == id);
+            _context.Add(productOrder);
+            await _context.SaveChangesAsync();
+            
+            var purchase = new Purchase();
+            purchase.Product = productOrder.Product;
+            purchase.Order = order;
+
+            return View(purchase);
+        }
+
+        // POST: Orders/Purchase/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,PaymentTypeID,DateCreated")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewData["PaymentTypeID"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeID", "AccountNumber", order.PaymentTypeID);
-            return View(order);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Purchase(Product product)
+        //{
+        //    if (id != order.OrderID)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(order);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!OrderExists(order.OrderID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewData["PaymentTypeID"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeID", "AccountNumber", order.PaymentTypeID);
+        //    return View(order);
+        //}
 
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)

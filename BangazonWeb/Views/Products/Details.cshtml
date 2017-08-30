@@ -11,7 +11,7 @@
     <div class="col-md-3">@Html.DisplayFor(model => model.Product.Description)</div>
     <div class="col-md-3">@Html.DisplayFor(model => model.Product.Price)</div>
     <div class="col-md-3">@Html.DisplayFor(model => model.Product.DateCreated)</div>
-    <div class="col-md-3"><a asp-action="Purchase" asp-route-id="@Model.Product.ProductID">Purchase</a></div>
+    <div class="col-md-3"><a asp-controller="Orders" asp-action="Purchase" asp-route-id="@Model.Product.ProductID">Purchase</a></div>
 </div>
 
 <div>

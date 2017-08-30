@@ -21,7 +21,6 @@ namespace Bangazon.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
 
         [Display(Name = "Line Items")]
