@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System;
 
+
 namespace Bangazon.Controllers
 {
     public class ProductsController : Controller
@@ -37,6 +38,52 @@ namespace Bangazon.Controllers
             return View(model);
         }
 
+
+
+        //POST: Products/Search
+        [HttpPost]
+        public IActionResult Search(ProductSearchViewModel model)
+        {
+            if (model.SearchRadio == "products")
+            {
+                if (model.Products != null)
+                {
+                    model.Products = (from product in model.Products
+                                  where product.Name == model.SearchTerms
+                                  select product);
+
+                    return View(model);
+                }
+                else
+                {
+                    return View("NoProductsFound");
+                }
+
+              
+            }
+            else if (model.SearchRadio == "location")
+            {
+                if (model.Products != null)
+                {
+                    model.Products = (from product in model.Products
+                                  where product.Location == model.SearchTerms
+                                  select product);
+
+                    return View(model);
+                }
+                else
+                {
+                    return View("NoProductsFound");
+                }
+            }
+            else
+            {
+                return View("NoProductsFound");
+            }
+        }
+
+
+        // GET: Products/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
