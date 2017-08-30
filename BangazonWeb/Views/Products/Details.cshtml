@@ -1,66 +1,20 @@
-@model Bangazon.Models.Product
+@model Bangazon.Models.ProductViewModels.ProductDetailViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Product Details";
 }
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Product.Name)</h2>
+<h4>Posted by @Html.DisplayFor(model => model.Product.User.FirstName) @Html.DisplayFor(model => model.Product.User.LastName)</h4>
+
+<div class="row">
+    <div class="col-md-3">@Html.DisplayFor(model => model.Product.Description)</div>
+    <div class="col-md-3">@Html.DisplayFor(model => model.Product.Price)</div>
+    <div class="col-md-3">@Html.DisplayFor(model => model.Product.DateCreated)</div>
+    <div class="col-md-3"><a asp-action="Purchase" asp-route-id="@Model.Product.ProductID">Purchase</a></div>
+</div>
 
 <div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImgPath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImgPath)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProductType.Label)
-        </dd>
-    </dl>
+    &lt;&lt; <a asp-action="Index">Back to List</a>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ProductID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

@@ -15,11 +15,13 @@ namespace Bangazon.Data
         {
             using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {
+
+
                 //Checks if the table is already seeded and breaks if it is
-                if (context.ProductType.Any())
-                {
-                    return;
-                }
+                              if (context.ProductType.Any())
+                              {
+                                       return;
+                              }
                 // Creating new instances of ProductType
                 var productTypes = new ProductType[]
                 {
