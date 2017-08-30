@@ -1,0 +1,67 @@
+@model Bangazon.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h2>My Profile</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.StreetAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.StreetAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.ZipCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.ZipCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Phone)
+        </dd>
+        <dt>
+            <a asp-controller="PaymentTypes" asp-action="Index">Payment Type Options</a>
+        </dt>
+        <dt>
+            <a asp-action="OrderHistory">Order History</a>
+        </dt>
+    </dl>
+</div>
+<br />
+<br />
+<div>
+    <a asp-controller="Profile" asp-action="Edit">Edit Profile</a> 
+</div>
+
