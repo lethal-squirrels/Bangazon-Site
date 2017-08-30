@@ -16,6 +16,7 @@ namespace Bangazon.Data
             using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {
 
+
                 //Checks if the table is already seeded and breaks if it is
                               if (context.ProductType.Any())
                               {
@@ -37,7 +38,7 @@ namespace Bangazon.Data
                         Label = "Bath"
                     },
                     new ProductType {
-                        Label = "Bedroom ;)"
+                        Label = "Bedroom"
                     },
                     new ProductType {
                         Label = "Electronics"
@@ -53,7 +54,7 @@ namespace Bangazon.Data
                     },
                     new ProductType {
                         Label = "Nutrition"
-                    },
+                    }
                 };
 
                 // Adds each new product type into the context
@@ -63,7 +64,7 @@ namespace Bangazon.Data
                 }
                 // Saves the ApplicationUsers to the database
                 context.SaveChanges();
-
+          
             }
         }
     }
