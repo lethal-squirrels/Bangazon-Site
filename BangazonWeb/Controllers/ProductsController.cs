@@ -37,9 +37,8 @@ namespace Bangazon.Controllers
             return View(model);
         }
 
-
-        [Route("{id}")]
-        public async Task<IActionResult> Detail([FromRoute]int? id)
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
         {
             // If no id was in the route, return 404
             if (id == null)
@@ -83,8 +82,7 @@ namespace Bangazon.Controllers
         {
             // Remove the user from the model validation because it is
             // not information posted in the form
-            var model = viewModel;
-            ModelState.Remove("Product.User");//why
+            ModelState.Remove("Product.User");
 
             if (ModelState.IsValid)
             {
@@ -99,13 +97,13 @@ namespace Bangazon.Controllers
                     .Select(c => c.Value);
 
                 Console.WriteLine($"roles\n\n\n\n{roles}");*/
-                model.Product.User = user;
-                model.Product.DateCreated = DateTime.Now;
-                _context.Add(model.Product);
+                viewModel.Product.User = user;
+                viewModel.Product.DateCreated = DateTime.Now;
+                _context.Add(viewModel.Product);
              
                 await _context.SaveChangesAsync();
-                var routeID = model.Product.ProductID;
-                return RedirectToAction("Detail",  "Products" , new { @id = routeID });
+                var routeID = viewModel.Product.ProductID;
+                return RedirectToAction("Details",  "Products" , new { @id = routeID });
 
             }
 
