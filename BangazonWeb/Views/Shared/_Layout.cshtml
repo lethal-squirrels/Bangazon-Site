@@ -30,24 +30,30 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bangazon</a>
             </div>
-            <form  class="navbar-form navbar-left" role="search">
+            <form  class="navbar-form navbar-left" role="search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search"  name="SearchTerms">
                 </div>
-                <button asp-area="" asp-controller="Products" asp-action="Index" name="SearchTerms" type="submit" class="btn btn-default">Submit</button>
+                <button asp-area="" asp-controller="Products" asp-action="Search" type="submit" class="btn btn-default">Submit</button>
                 <div>
                     <div class="radio">
                         <label class="nav_radio_text">
-                            <input type="radio" name ="searchRadio" value="products" class="nav_radio_text"> Search Products
+
+                            <input type="radio" name ="SearchRadio" value="products" class="nav_radio_text"> Search Products
+
                         </label>
                     </div>
                     <div class="radio">
                         <label class="nav_radio_text">
-                            <input type="radio" name="searchRadio" value="location" class="nav_radio_text"> Search Location
+
+                            <input type="radio" name="SearchRadio" value="location" class="nav_radio_text"> Search Location
+
                         </label>
                     </div>
                </div>
+              
             </form>
+            
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
@@ -55,11 +61,11 @@
                     <li><a asp-area="" asp-controller="ProductTypes" asp-action="Index">Categories</a></li>
                     @if (Context.User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell a Product</a></li>
-                    }
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Account Settings</a></li>
+                    <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell A Product</a></li>
                     <li><a asp-area="" asp-controller="Orders" asp-action="Index">Shopping Cart</a></li>
-
+                    <li><a asp-area="" asp-controller="Profile" asp-action="Index">My Profile</a></li>
+                    }
+                 
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
