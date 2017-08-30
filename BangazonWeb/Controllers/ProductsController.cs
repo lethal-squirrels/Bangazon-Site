@@ -112,6 +112,39 @@ namespace Bangazon.Controllers
             return View(newmodel);
         }
 
+        // GET: Products/Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var producttobedeleted = await _context.Product
+                .Include(p => p.LineItems.Select(li => li.Order).Where(o => o.PaymentTypeID == null))
+                .SingleOrDefaultAsync(p => p.ProductID == id);
+
+            if (producttobedeleted == null)
+            {
+                return View(producttobedeleted);
+            }
+
+            return View(producttobedeleted);
+
+        }
+
+        // POST: Employees/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var prod = await _context.Product.SingleOrDefaultAsync(m => m.ProductID == id);
+            _context.Product.Remove(prod);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
         public async Task<IActionResult> Types()
         {
             var model = new ProductTypesViewModel();
