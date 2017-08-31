@@ -40,8 +40,8 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="Product.ProductTypeID" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                @Html.LabelFor(model => model.Product.ProductTypeID)
                 @Html.DropDownList(
                     "Product.ProductTypeID",
                     @Model.ProductTypeId,
@@ -50,7 +50,7 @@
                         @name = "Product.ProductTypeID"
                     }
                 )
-                <span asp-validation-for="@Model.Product.ProductTypeID" class="text-danger" />
+                @Html.ValidationMessageFor(model => model.Product.ProductTypeID, "", new { @class="text-danger"})
             </div>
         </div>
         <div class="form-group">
