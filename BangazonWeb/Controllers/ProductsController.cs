@@ -102,13 +102,11 @@ namespace Bangazon.Controllers
             model.Product = await _context.Product
                     .Include(prod => prod.User)
                     .SingleOrDefaultAsync(prod => prod.ProductID == id);
-            model.Product.ImgPath = "~" + model.Product.ImgPath.Replace(@"\", "/");
             // If product not found, return 404
             if (model.Product == null)
             {
                 return NotFound();
             }
-
             return View(model);
         }
 
@@ -149,13 +147,13 @@ namespace Bangazon.Controllers
                 if (viewModel.ProductPhoto.Length > 0)
                 {
                     string directory = Directory.GetCurrentDirectory();
-                    string localPath = @"\wwwroot\images\" + viewModel.ProductPhoto.FileName;
-                    string savePath = directory + localPath;
-                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    string localSavePath = directory + @"\wwwroot\images\" + viewModel.ProductPhoto.FileName;
+                    string dbPath = "/images/" + viewModel.ProductPhoto.FileName;
+                    using (var stream = new FileStream(localSavePath, FileMode.Create))
                     {
                         await viewModel.ProductPhoto.CopyToAsync(stream);
                     }
-                    viewModel.Product.ImgPath = localPath;
+                    viewModel.Product.ImgPath = dbPath;
                 }
 
                 _context.Add(viewModel.Product);

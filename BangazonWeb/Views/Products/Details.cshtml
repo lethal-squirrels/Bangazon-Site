@@ -2,16 +2,14 @@
 
 @{
     ViewData["Title"] = "Product Details";
-    string hardcoded = "https://cdn1.medicalnewstoday.com/content/images/headlines/271/271157/bananas.jpg";
 }
 
 <h2>@Html.DisplayFor(model => model.Product.Name)</h2>
 <h4>Posted by @Html.DisplayFor(model => model.Product.User.FirstName) @Html.DisplayFor(model => model.Product.User.LastName)</h4>
-<img src="@Model.Product.ImgPath" class="img-thumbnail"/>
-<br />
-<img src="@hardcoded" class="img-thumbnail"/>
-<br />
-<img src="https://cdn1.medicalnewstoday.com/content/images/headlines/271/271157/bananas.jpg" class="img-thumbnail" />
+@if (Model.Product.ImgPath != null)
+{
+    <img src="@Model.Product.ImgPath" class="img-thumbnail" />
+}
 <div class="row">
     <div class="col-md-2">Name</div>
     <div class="col-md-2">Description</div>
