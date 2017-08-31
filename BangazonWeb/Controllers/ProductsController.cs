@@ -37,6 +37,17 @@ namespace Bangazon.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> MyIndex()
+        {
+           // Create new instance of the view model
+           ProductListViewModel model = new ProductListViewModel();
+
+           // Get current user
+           var user = await GetCurrentUserAsync();
+           model.Products = await _context.Product.Where(p => p.User.Id == user.Id).ToListAsync();
+           return View(model);
+        }
+
         //POST: Products/Search
         [HttpPost]
         public async Task<IActionResult> Search(ProductSearchViewModel model)
@@ -162,21 +173,30 @@ namespace Bangazon.Controllers
         // GET: Products/Delete
         public async Task<IActionResult> Delete(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var producttobedeleted = await _context.Product
-                .Include(p => p.LineItems.Select(li => li.Order).Where(o => o.PaymentTypeID == null))
-                .SingleOrDefaultAsync(p => p.ProductID == id);
+            var proddel = (from p in _context.Product
+                           join po in _context.ProductOrder
+                           on p.ProductID equals po.ProductID
+                           join oo in _context.Order
+                           on po.OrderID equals oo.OrderID
+                           where oo.PaymentTypeID == null
+                           select p).FirstAsync();
 
-            if (producttobedeleted == null)
+            var finalprod = await proddel;
+
+
+
+            if (finalprod == null)
             {
-                return View(producttobedeleted);
+                return NotFound();
             }
 
-            return View(producttobedeleted);
+            return View(finalprod);
 
         }
 
