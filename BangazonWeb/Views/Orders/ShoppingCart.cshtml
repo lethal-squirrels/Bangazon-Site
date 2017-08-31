@@ -16,17 +16,16 @@
         </tr>
     </thead>
 
-    @foreach (var product in Model.Products.GroupBy(p => p.Name))
+    @foreach (var product in Model.Products)
     {
         <tr>
             <td>
-                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Select(p => p.ProductID)">
-                    @Html.DisplayFor(modelItem => product.Key)
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.ProductID">
+                    @Html.DisplayFor(modelItem => product.Name)
                 </a>
             </td>
-            @*<td>@Html.DisplayFor(modelItem => product.Count())</td>*@
-            <td>@Html.DisplayFor(modelItem => product.Select(p => p.Description))</td>
-            <td>@Html.DisplayFor(modelItem => product.Select(p => p.Price))</td>
+            <td>@Html.DisplayFor(modelItem => product.Description)</td>
+            <td>@Html.DisplayFor(modelItem => product.Price)</td>
         </tr>
     }
 
