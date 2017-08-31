@@ -1,0 +1,36 @@
+﻿@model Bangazon.Models.OrderViewModels.ShoppingCart
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+<br />
+<br />
+<h2>My Shopping Cart</h2>
+<h3>Order @Model.Order.OrderID</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    @foreach (var product in Model.Products.GroupBy(p => p.Name))
+    {
+        <tr>
+            <td>
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Select(p => p.ProductID)">
+                    @Html.DisplayFor(modelItem => product.Key)
+                </a>
+            </td>
+            @*<td>@Html.DisplayFor(modelItem => product.Count())</td>*@
+            <td>@Html.DisplayFor(modelItem => product.Select(p => p.Description))</td>
+            <td>@Html.DisplayFor(modelItem => product.Select(p => p.Price))</td>
+        </tr>
+    }
+
+</table>
+<br />
+<h3>Total Items: @Model.Products.Count()</h3>
+<h3>Total Price: @Model.Products.Sum(p => p.Price)</h3>

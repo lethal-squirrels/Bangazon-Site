@@ -9,6 +9,7 @@ using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Bangazon.Models.OrderViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -25,6 +26,24 @@ namespace Bangazon.Controllers
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        // GET: Orders/ShoppingCart
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ShoppingCart()
+        {
+            var shoppingCart = new ShoppingCart(_context);
+            shoppingCart.User = await GetCurrentUserAsync();
+            shoppingCart.Order = await _context.Order.SingleOrDefaultAsync(o => o.PaymentType == null);
+
+            
+            if (shoppingCart.Order == null)
+            {
+                return NotFound();
+            }
+
+            return View(shoppingCart);
+        }
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -64,6 +83,7 @@ namespace Bangazon.Controllers
         }
 
         // GET: Orders/Purchase/5
+        [Authorize]
         public async Task<IActionResult> Purchase(int? id)
         {
             if (id == null)
