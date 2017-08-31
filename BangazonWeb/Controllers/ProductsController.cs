@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System;
+using System.IO;
 
 namespace Bangazon.Controllers
 {
@@ -101,7 +102,7 @@ namespace Bangazon.Controllers
             model.Product = await _context.Product
                     .Include(prod => prod.User)
                     .SingleOrDefaultAsync(prod => prod.ProductID == id);
-
+            model.Product.ImgPath = "~" + model.Product.ImgPath.Replace(@"\", "/");
             // If product not found, return 404
             if (model.Product == null)
             {
@@ -131,31 +132,39 @@ namespace Bangazon.Controllers
             // Remove the user from the model validation because it is
             // not information posted in the form
        
-            ModelState.Remove("Product.User");//why
+            ModelState.Remove("Product.User");
 
             if (ModelState.IsValid)
             {
                 /*
-                    If all other properties validation, then grab the 
+                    If all other properties validate, then grab the 
                     currently authenticated user and assign it to the 
                     product before adding it to the db _context
                 */
                 var user = await GetCurrentUserAsync();
-               /* var roles = ((ClaimsIdentity)User.Identity).Claims
-                    .Where(c => c.Type == ClaimTypes.Role)
-                    .Select(c => c.Value);
-
-                Console.WriteLine($"roles\n\n\n\n{roles}");*/
                 viewModel.Product.User = user;
                 viewModel.Product.DateCreated = DateTime.Now;
+                
+
+                if (viewModel.ProductPhoto.Length > 0)
+                {
+                    string directory = Directory.GetCurrentDirectory();
+                    string localPath = @"\wwwroot\images\" + viewModel.ProductPhoto.FileName;
+                    string savePath = directory + localPath;
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await viewModel.ProductPhoto.CopyToAsync(stream);
+                    }
+                    viewModel.Product.ImgPath = localPath;
+                }
+
                 _context.Add(viewModel.Product);
-             
+
                 await _context.SaveChangesAsync();
                 var routeID = viewModel.Product.ProductID;
                 return RedirectToAction("Details", "Products", new { @id = routeID });
 
             }
-
             ProductCreateViewModel newmodel = new ProductCreateViewModel(_context);
             return View(newmodel);
         }
