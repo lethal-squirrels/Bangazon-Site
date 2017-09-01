@@ -144,17 +144,21 @@ namespace Bangazon.Controllers
                 viewModel.Product.DateCreated = DateTime.Now;
                 
 
-                if (viewModel.ProductPhoto.Length > 0)
+                if (viewModel.ProductPhoto != null)
                 {
-                    string directory = Directory.GetCurrentDirectory();
-                    string localSavePath = directory + @"\wwwroot\images\" + viewModel.ProductPhoto.FileName;
-                    string dbPath = "/images/" + viewModel.ProductPhoto.FileName;
-                    using (var stream = new FileStream(localSavePath, FileMode.Create))
+                    if (viewModel.ProductPhoto.Length > 0)
                     {
-                        await viewModel.ProductPhoto.CopyToAsync(stream);
+                        string directory = Directory.GetCurrentDirectory();
+                        string localSavePath = directory + @"\wwwroot\images\" + viewModel.ProductPhoto.FileName;
+                        string dbPath = "/images/" + viewModel.ProductPhoto.FileName;
+                        using (var stream = new FileStream(localSavePath, FileMode.Create))
+                        {
+                            await viewModel.ProductPhoto.CopyToAsync(stream);
+                        }
+                        viewModel.Product.ImgPath = dbPath;
                     }
-                    viewModel.Product.ImgPath = dbPath;
                 }
+                
 
                 _context.Add(viewModel.Product);
 
@@ -198,7 +202,6 @@ namespace Bangazon.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
 
         public async Task<IActionResult> Types()
         {
