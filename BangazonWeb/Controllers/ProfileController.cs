@@ -7,6 +7,7 @@ using Bangazon.Data;
 using Microsoft.AspNetCore.Identity;
 using Bangazon.Models;
 using Microsoft.EntityFrameworkCore;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -42,6 +43,34 @@ namespace Bangazon.Controllers
 
             model.User = await GetCurrentUserAsync();
             return View(model);
+        }
+
+        // GET: Profile/OrderHistory
+        public async Task<IActionResult> OrderHistory()
+        {
+            var user = await GetCurrentUserAsync();
+            var viewModel = new OrderHistoryViewModel(_context, user);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            return View(viewModel);
+        }
+
+        // GET: Profile/OrderDetails
+        public async Task<IActionResult> OrderDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = await GetCurrentUserAsync();
+            var viewModel = new OrderDetailsViewModel(_context, user, id);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            return View(viewModel);
         }
 
         // POST: Profile/Edit
