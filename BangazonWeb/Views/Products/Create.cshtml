@@ -53,7 +53,14 @@
                 <span asp-validation-for="@Model.Product.ProductTypeID" class="text-danger" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="col-md-2 col-md-offset-2">
+            <div class="checkbox">
+                <label class="create_prod_text">
+                    <input type="checkbox" name="localDeliveryCheck" value="yes"> Local Delivery Available
+                </label>
+            </div>
+        </div>
+        <div class="row form-group location">
             <label asp-for="Product.Location" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Product.Location" class="form-control" />
