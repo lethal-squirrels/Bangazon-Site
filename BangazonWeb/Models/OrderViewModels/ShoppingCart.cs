@@ -25,8 +25,9 @@ namespace Bangazon.Models.OrderViewModels
             var curentOrder = _context.Order.SingleOrDefault(o => o.PaymentType == null && o.User.Id == user.Id);
             var productOrders = _context.ProductOrder.Where(po => po.OrderID == curentOrder.OrderID).ToList();
 
-            var productsInOrder = (from p in allProducts 
-                                   join po in productOrders on p.ProductID equals po.ProductID
+            var productsInOrder = (from p in _context.Product 
+                                   join po in _context.ProductOrder.Where(po => po.OrderID == curentOrder.OrderID)
+                                   on p.ProductID equals po.ProductID
                                    select p
                                    ).ToList();
             var groupedProducts = productsInOrder.GroupBy(p => p.ProductID);
