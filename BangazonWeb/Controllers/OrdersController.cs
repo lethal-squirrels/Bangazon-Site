@@ -32,10 +32,13 @@ namespace Bangazon.Controllers
         [HttpGet]
         public async Task<IActionResult> ShoppingCart()
         {
-            var shoppingCart = new ShoppingCart(_context, await GetCurrentUserAsync())
+            var user = await GetCurrentUserAsync();
+            var currentOrder = _context.Order.SingleOrDefault(o => o.PaymentType == null && o.User.Id == user.Id);
+            if (currentOrder == null)
             {
-                Order = await _context.Order.SingleOrDefaultAsync(o => o.PaymentType == null)
-            };
+                return View("ShoppingCartEmpty");
+            }
+            var shoppingCart = new ShoppingCart(_context, user, currentOrder);
 
 
             if (shoppingCart.Order == null)

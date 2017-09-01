@@ -17,13 +17,13 @@ namespace Bangazon.Models.OrderViewModels
 
         public IEnumerable<Product> Products { get; set; }
 
-        public ShoppingCart(ApplicationDbContext _context, ApplicationUser user)
+        public ShoppingCart(ApplicationDbContext _context, ApplicationUser user, Order currentOrder)
         {
+            Order = currentOrder;
             User = user;
             List<Product> products = new List<Product>();
             var allProducts = _context.Product.ToList();
-            var curentOrder = _context.Order.SingleOrDefault(o => o.PaymentType == null && o.User.Id == user.Id);
-            var productOrders = _context.ProductOrder.Where(po => po.OrderID == curentOrder.OrderID).ToList();
+            var productOrders = _context.ProductOrder.Where(po => po.OrderID == Order.OrderID).ToList();
 
             var productsInOrder = (from p in allProducts 
                                    join po in productOrders on p.ProductID equals po.ProductID
