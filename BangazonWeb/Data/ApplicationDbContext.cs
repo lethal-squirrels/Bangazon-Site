@@ -30,8 +30,10 @@ namespace Bangazon.Data
 
         public DbSet<Bangazon.Models.Order> Order { get; set; }
 
+        public DbSet<Bangazon.Models.PaymentType> PaymentType { get; set; }
+
         public DbSet<Bangazon.Models.ProductOrder> ProductOrder { get; set; }
 
-        public DbSet<Bangazon.Models.PaymentType> PaymentType { get; set; }
+
     }
 }

@@ -33,7 +33,8 @@ namespace Bangazon.Models
         [Required]
         public virtual ApplicationUser User { get; set; }
 
-        [Required]
+        [Display(Name = "Category")]
+        [Range(1, 1000, ErrorMessage = "Please choose a category.")]
         public int ProductTypeID { get; set; }
 
         [Display(Name = "Category")]

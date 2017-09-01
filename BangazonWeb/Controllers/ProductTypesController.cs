@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -22,17 +23,44 @@ namespace Bangazon.Controllers
         // GET: ProductTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductType.ToListAsync());
+            var categoryViewModel = new CategoryIndexViewModel();
+            var productTypes = await _context.ProductType.ToListAsync();
+            var products = await _context.Product.ToListAsync();
+
+            categoryViewModel.productTypeCounts = (from t in _context.ProductType
+                                                   join p in _context.Product
+                                                   on t.ProductTypeID equals p.ProductTypeID
+                                                   group new { t, p } by new { t.Label, t.ProductTypeID } into grouped
+                                                   select new ProductCountViewModel
+                                                   {
+                                                       TypeName = grouped.Key.Label,
+                                                       ProductCount = grouped.Select(x => x.p.ProductID).Count(),
+                                                       ProductTypeID = grouped.Key.ProductTypeID,
+                                                       Products = grouped.Select(x => x.p).Take(3)
+                                                   }).ToList();
+
+            foreach (var type in categoryViewModel.productTypeCounts)
+            {
+                categoryViewModel.Products = products.Where(p => p.ProductType.ProductTypeID == type.ProductTypeID).Take(3).ToList();
+            }
+
+            return View(categoryViewModel);
         }
 
+        //Displays all products in a specific category
         // GET: ProductTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            //if not found display 404
             if (id == null)
             {
                 return NotFound();
             }
 
+            //creates a new instance of the viewmodel
+            var productTypeViewModel = new ProductTypeDetailViewModel();
+
+            //grabs all product type 
             var productType = await _context.ProductType
                 .SingleOrDefaultAsync(m => m.ProductTypeID == id);
             if (productType == null)
@@ -40,7 +68,15 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            return View(productType);
+
+            productTypeViewModel.Products = await _context.Product
+                            .Where(p =>p.ProductTypeID == id)
+                            .ToListAsync();
+
+            productTypeViewModel.ProductType = productType;
+
+
+            return View(productTypeViewModel);
         }
 
         // GET: ProductTypes/Create
