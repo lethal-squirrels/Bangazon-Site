@@ -1,0 +1,47 @@
+﻿@model Bangazon.Models.OrderViewModels.ShoppingCart
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+<br />
+<br />
+<h2>My Shopping Cart</h2>
+<h3>Order @Model.Order.OrderID</h3>
+<hr />
+<h4>Products</h4>
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    @foreach (var product in Model.Products)
+    {
+        <tr>
+            <td>
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.ProductID">
+                    @Html.DisplayFor(modelItem => product.Name)
+                </a>
+            </td>
+            <td>@Html.DisplayFor(modelItem => product.Description)</td>
+            <td>@Html.DisplayFor(modelItem => product.Quantity)</td>
+            <td>@Html.DisplayFor(modelItem => product.Price)</td>
+        </tr>
+    }
+    <tr>
+        <td>Total Items: @Model.Products.Count()</td>
+        <td></td>
+        <td>Order Total:</td>
+        <td>@String.Format("{0:C}", @Model.Products.Sum(p => p.Price))</td>
+    </tr>
+
+</table>
+<div>
+    <button asp-action="CompleteOrder" asp-route-id="@Model.Order.OrderID">Complete Order</button>
+    <button asp-action="CancelOrder" asp-route-id="@Model.Order.OrderID">Cancel Order</button>
+</div>
