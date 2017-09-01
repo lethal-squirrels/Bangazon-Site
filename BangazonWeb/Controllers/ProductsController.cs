@@ -44,8 +44,18 @@ namespace Bangazon.Controllers
 
            // Get current user
            var user = await GetCurrentUserAsync();
-           model.Products = await _context.Product.Where(p => p.User.Id == user.Id).ToListAsync();
-           return View(model);
+           var my_prods = await _context.Product.Where(p => p.User.Id == user.Id).ToListAsync();
+
+               if (my_prods != null)
+               {
+                    model.Products = my_prods;
+                    return View(model);
+                }
+               else
+               {
+                  return View("NoProductsFound");
+               }
+
         }
 
         //POST: Products/Search
@@ -170,6 +180,7 @@ namespace Bangazon.Controllers
             return View(newmodel);
         }
 
+      
         // GET: Products/Delete
         public async Task<IActionResult> Delete(int? id)
         {
@@ -179,24 +190,43 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            var proddel = (from p in _context.Product
-                           join po in _context.ProductOrder
-                           on p.ProductID equals po.ProductID
-                           join oo in _context.Order
-                           on po.OrderID equals oo.OrderID
-                           where oo.PaymentTypeID == null
-                           select p).FirstAsync();
+            var myprod = await _context.Product.SingleOrDefaultAsync(P => P.ProductID == id);
 
-            var finalprod = await proddel;
-
-
-
-            if (finalprod == null)
+            var checkprod = await _context.ProductOrder.FirstOrDefaultAsync(po => po.ProductID == id);
+            if (checkprod != null)
             {
-                return NotFound();
+                var proddel = await (from p in _context.Product
+                                     join po in _context.ProductOrder
+                                     on p.ProductID equals po.ProductID
+                                     join oo in _context.Order
+                                     on po.OrderID equals oo.OrderID
+                                     where oo.PaymentTypeID == null
+                                     select p).SingleOrDefaultAsync(p => p.ProductID == id);
+
+                if (proddel == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    var mypo = await _context.ProductOrder.Where(po => po.ProductID == id).ToListAsync();
+                    foreach (var item in mypo)
+                    {
+                        _context.ProductOrder.Remove(item);
+                    }
+                    return View(proddel);
+                }
+
+            }
+            else
+            {
+                
+
+                return View(myprod);
             }
 
-            return View(finalprod);
+         
+
 
         }
 

@@ -116,6 +116,8 @@ namespace Bangazon.Controllers
             return View(productType);
         }
 
+
+
         // GET: ProductTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
