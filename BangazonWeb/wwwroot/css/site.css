@@ -53,3 +53,7 @@ textarea {
 .nav_radio_text {
     color: lightgrey;
 }
+
+.hidden {
+    display: none;
+}
