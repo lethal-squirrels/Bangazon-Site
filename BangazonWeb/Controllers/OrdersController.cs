@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -14,10 +16,15 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -45,28 +52,42 @@ namespace Bangazon.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
-        public IActionResult Create()
+        public async Task<Order> CreateOrder()
         {
-            ViewData["PaymentTypeID"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeID", "AccountNumber");
-            return View();
+            var order = new Order();
+            order.User = await GetCurrentUserAsync();
+            order.DateCreated = DateTime.Now;
+
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+            return order;
         }
 
-        // POST: Orders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,PaymentTypeID,DateCreated")] Order order)
+        // GET: Orders/Purchase/5
+        public async Task<IActionResult> Purchase(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                _context.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return NotFound();
             }
-            ViewData["PaymentTypeID"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeID", "AccountNumber", order.PaymentTypeID);
-            return View(order);
+            var user = await GetCurrentUserAsync();
+            var order = await _context.Order.SingleOrDefaultAsync(m => m.User.Id == user.Id && m.PaymentType == null);
+            if (order == null)
+            {
+                order = await CreateOrder();
+            }
+
+            var productOrder = new ProductOrder();
+            productOrder.Order = order;
+            productOrder.Product = await _context.Product.SingleOrDefaultAsync(p => p.ProductID == id);
+            _context.Add(productOrder);
+            await _context.SaveChangesAsync();
+            
+            var purchase = new Purchase();
+            purchase.Product = productOrder.Product;
+            purchase.Order = order;
+
+            return View(purchase);
         }
 
         // GET: Orders/Edit/5
