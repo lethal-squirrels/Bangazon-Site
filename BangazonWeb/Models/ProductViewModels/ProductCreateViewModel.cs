@@ -2,6 +2,7 @@
 using System.Linq;
 using Bangazon.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace Bangazon.Models.ProductViewModels
 {
@@ -9,6 +10,7 @@ namespace Bangazon.Models.ProductViewModels
     {
         public List<SelectListItem> ProductTypeId { get; set; }
         public Product Product { get; set; }
+        public IFormFile ProductPhoto { get; set; }
         public ProductCreateViewModel() { }
         public ProductCreateViewModel(ApplicationDbContext ctx)
         {
