@@ -9,10 +9,10 @@
 <div class="row">
     <div class="col-md-3">@Html.DisplayFor(model => model.Product.Description)</div>
     <div class="col-md-3">@Html.DisplayFor(model => model.Product.Price)</div>
-    <div class="col-md-3"><a asp-controller="Order" asp-action="ShoppingCart" asp-route-id="@Model.Order.OrderID">View Shopping Cart</a></div>
+    <div class="col-md-3"><a asp-controller="Orders" asp-action="ShoppingCart">View Shopping Cart</a></div>
     <div class="col-md-3"><a asp-controller="Products" asp-action="Index">Back to Products</a></div>
 </div>
 
 <div>
-    &lt;&lt; <a asp-action="Index">Back to List</a>
+    &lt;&lt; <a asp-controller="Products" asp-action="Index">Back to List</a>
 </div>
