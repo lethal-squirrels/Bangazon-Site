@@ -223,6 +223,7 @@ namespace Bangazon.Controllers
                     foreach (var item in mypo)
                     {
                         _context.ProductOrder.Remove(item);
+                        await _context.SaveChangesAsync();
                     }
                     return View(proddel);
                 }
