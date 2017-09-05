@@ -46,10 +46,12 @@ namespace Bangazon.Controllers
             {
                 return NotFound();
             }
+
             if (shoppingCart.Products.Count() < 1)
             {
                 return View("ShoppingCartEmpty");
             }
+
 
             return View(shoppingCart);
         }
