@@ -32,7 +32,7 @@
         </tr>
     }
     <tr>
-        <td>Total Items: @Model.Products.Count()</td>
+        <td>Total Items: @Model.ProductsCount</td>
         <td></td>
         <td>Order Total:</td>
         <td>@String.Format("{0:C}", @Model.Products.Sum(p => p.Price))</td>

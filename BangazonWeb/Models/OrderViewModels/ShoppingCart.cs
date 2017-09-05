@@ -17,6 +17,8 @@ namespace Bangazon.Models.OrderViewModels
 
         public IEnumerable<Product> Products { get; set; }
 
+        public int ProductsCount { get; set; }
+
         public ShoppingCart(ApplicationDbContext _context, ApplicationUser user, Order currentOrder)
         {
             Order = currentOrder;
@@ -45,6 +47,7 @@ namespace Bangazon.Models.OrderViewModels
                         User = p.User,
                         ProductTypeID = p.ProductTypeID
                     };
+                    ProductsCount += p.LineItems.Count();
                     products.Add(newProduct);
                     break;
                 }
