@@ -8,9 +8,9 @@ Bangazon is a personal e-commerce platform, where users can buy and sell goods f
 
 The Bangazon web application was built using: 
 
-	* ASP.NET Core MVC and Identity Framework 
-	* [Bower](https://go.microsoft.com/fwlink/?LinkId=518004) for managing client-side libraries
-	* Theming using [Bootstrap](https://go.microsoft.com/fwlink/?LinkID=398939)
+*  ASP.NET Core MVC and Identity Framework 
+*  [Bower](https://go.microsoft.com/fwlink/?LinkId=518004) for managing client-side libraries
+*  Theming using [Bootstrap](https://go.microsoft.com/fwlink/?LinkID=398939)
 
 ## To run this application:
 	1. Clone this repo to a local directory
@@ -20,9 +20,8 @@ The Bangazon web application was built using:
 	1. Run the program on your local host 
 
 ## Contributors 
-
-	* [Chaz Henricks](https://github.com/chazhenricks)
-	* [Matt Augsburger](https://github.com/augsismyburger)
-	* [Madeline Power](https://github.com/madelineepower)
-	* [Ben Greaves](https://github.com/BSGreaves)
-	* [Aarti Jaisinghani](https://github.com/jaisi)
+*  [Chaz Henricks](https://github.com/chazhenricks)
+*  [Matt Augsburger](https://github.com/augsismyburger)
+*  [Madeline Power](https://github.com/madelineepower)
+*  [Ben Greaves](https://github.com/BSGreaves)
+*  [Aarti Jaisinghani](https://github.com/jaisi)
