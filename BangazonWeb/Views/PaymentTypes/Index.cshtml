@@ -1,11 +1,13 @@
-@model IEnumerable<Bangazon.Models.ProductViewModels.CategoryIndexViewModel
+@model IEnumerable<Bangazon.Models.PaymentType>
 
 @{
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Payment Types";
 }
 
-<h2>Index</h2>
-
+<h2>Payment Types</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
 <table class="table">
     <thead>
