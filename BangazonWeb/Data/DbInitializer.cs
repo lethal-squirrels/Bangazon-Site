@@ -148,6 +148,7 @@ namespace Bangazon.Data
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Home").ProductTypeID,
                             DateCreated = DateTime.Now,
                             User = userStore.Users.First<ApplicationUser>(user => user.UserName == "a@a.com"),
+                             Location = "",
 
                     },
                         new Product {
@@ -177,7 +178,9 @@ namespace Bangazon.Data
                             Quantity = 3,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Electronics").ProductTypeID,
                             DateCreated = DateTime.Now,
-                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "b@b.com")
+                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "b@b.com"),
+                            Location = "",
+
                     },
                         new Product {
                             Name = "Shoes",
@@ -186,7 +189,8 @@ namespace Bangazon.Data
                             Quantity = 6,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Clothing").ProductTypeID,
                             DateCreated = DateTime.Now,
-                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "b@b.com")
+                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "b@b.com"),
+                            Location = "",
                     },
                         new Product {
                             Name = "Fruit roll ups",
@@ -215,7 +219,8 @@ namespace Bangazon.Data
                             Quantity = 3,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Electronics").ProductTypeID,
                             DateCreated = DateTime.Now,
-                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "a@a.com")
+                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "a@a.com"),
+                            Location = "",
                     },
                         new Product {
                             Name = "Comforter",
@@ -224,7 +229,8 @@ namespace Bangazon.Data
                             Quantity = 2,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Home").ProductTypeID,
                             DateCreated = DateTime.Now,
-                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "b@b.com")
+                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "b@b.com"),
+                            Location = "",
                     },
                         new Product {
                             Name = "Semi-truck",
@@ -233,7 +239,8 @@ namespace Bangazon.Data
                             Quantity = 1,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Auto").ProductTypeID,
                             DateCreated = DateTime.Now,
-                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "c@c.com")
+                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "c@c.com"),
+                            Location = "",
                     },
                         new Product {
                             Name = "Socks",
@@ -242,7 +249,8 @@ namespace Bangazon.Data
                             Quantity = 1200,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Clothing").ProductTypeID,
                             DateCreated = DateTime.Now,
-                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "a@a.com")
+                            User = userStore.Users.First<ApplicationUser>(user => user.UserName == "a@a.com"),
+                            Location = "",
                     }
                 };
 
