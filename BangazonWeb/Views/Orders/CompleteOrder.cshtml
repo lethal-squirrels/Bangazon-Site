@@ -1,0 +1,27 @@
+﻿@model Bangazon.Models.OrderViewModels.CompleteOrder
+
+@{
+    ViewData["Title"] = "Complete Order";
+}
+<h3>Order @Model.Order.OrderID</h3>
+<hr />
+<h3>Choose a Payment Type</h3>
+<form asp-action="CreateOrder">
+    <div class="col-md-10">
+        @Html.DropDownList(
+                    "Order.PaymentTypeID",
+                    @Model.PaymentTypeId,
+                    new
+                    {
+                        @name = "Order.PaymentTypeID"
+                    }
+                )
+        @Html.ValidationMessageFor(model => model.Order.PaymentTypeID, "", new { @class = "text-danger" })
+    </div>
+    <input type="submit" value="Complete Order" asp-route-return-url="" class="btn btn-success" />
+</form>
+<hr />
+
+<div>
+
+</div>

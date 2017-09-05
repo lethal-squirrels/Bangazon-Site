@@ -130,6 +130,14 @@ namespace Bangazon.Controllers
             return View("ShoppingCartEmpty");
         }
 
+        public async Task<IActionResult> CompleteOrder()
+        {
+            // Create new instance of the view model
+            CompleteOrder model = new CompleteOrder(_context, await GetCurrentUserAsync());
+
+            return View(model);
+        }
+
         private bool OrderExists(int id)
         {
             return _context.Order.Any(e => e.OrderID == id);
