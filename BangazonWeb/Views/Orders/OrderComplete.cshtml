@@ -1,0 +1,50 @@
+﻿@model Bangazon.Models.OrderViewModels.OrderCompleteViewModel
+
+<h2>Order Complete!</h2>
+
+<h2>@Html.DisplayNameFor(model => model.Order.OrderID) @Html.DisplayFor(model => model.Order.OrderID)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.DateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.DateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.PaymentType.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.PaymentType.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderTotal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderTotal)
+        </dd>
+    </dl>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Date Posted</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    @foreach (var lineItem in Model.Order.LineItems)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => lineItem.Product.Name)</td>
+            <td>@Html.DisplayFor(modelItem => lineItem.Product.Description)</td>
+            <td>@Html.DisplayFor(modelItem => lineItem.Product.DateCreated)</td>
+            <td>@Html.DisplayFor(modelItem => lineItem.Product.Price)</td>
+        </tr>
+    }
+</table>

@@ -130,6 +130,35 @@ namespace Bangazon.Controllers
             return View("ShoppingCartEmpty");
         }
 
+        // POST: Orders/???
+        [HttpPost]
+        public async Task<IActionResult> CompleteOrder (int? orderid)
+        {
+            var user = await GetCurrentUserAsync();
+            var currentOrder = _context.Order.SingleOrDefault(o => o.PaymentType == null && o.User.Id == user.Id);
+            if (currentOrder == null || currentOrder.LineItems == null)
+            {
+                return NotFound();
+            }
+            foreach (var item in currentOrder.LineItems)
+            {
+                item.Product.Quantity = item.Product.Quantity - 1;
+                _context.Product.Add(item.Product);
+            }
+            //currentOrder.PaymentType = selectedpaymentType (Get this from arguments or viewmodel?)
+            _context.Order.Add(currentOrder);
+            await _context.SaveChangesAsync();
+            var orderID = new { orderID = orderid };
+            return RedirectToAction("OrderCompleted", orderID);
+        }
+
+        public async Task<IActionResult> OrderCompleted (int? id) 
+        {
+            var user = await GetCurrentUserAsync();
+            var viewModel = new OrderCompleteViewModel(_context, user, id);
+            return View(viewModel);
+        }
+
         private bool OrderExists(int id)
         {
             return _context.Order.Any(e => e.OrderID == id);

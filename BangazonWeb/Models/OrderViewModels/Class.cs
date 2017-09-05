@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bangazon.Models.OrderViewModels
 {
-    public class OrderDetailsViewModel
+    public class OrderCompleteViewModel
     {
         public Order Order { get; set; }
 
@@ -16,7 +16,7 @@ namespace Bangazon.Models.OrderViewModels
         [Display(Name = "Order Total")]
         public double OrderTotal { get; set; }
 
-        public OrderDetailsViewModel(ApplicationDbContext ctx, ApplicationUser user, int? orderid)
+        public OrderCompleteViewModel(ApplicationDbContext ctx, ApplicationUser user, int? orderid)
         {
             Order = ctx.Order.Where(o => orderid == o.OrderID).Include("LineItems.Product").Include("PaymentType").SingleOrDefault();
             OrderTotal = Order.LineItems.Sum(x => x.Product.Price);
