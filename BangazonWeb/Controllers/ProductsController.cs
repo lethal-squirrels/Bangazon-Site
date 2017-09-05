@@ -72,20 +72,14 @@ namespace Bangazon.Controllers
                 if (model.Products != null)
                 {
                     model.Products = (from product in model.Products
-
                                   where product.Name.ToLower().Contains(model.SearchTerms.ToLower())
-
                                   select product);
-               
-
                     return View(model);
                 }
                 else
                 {
                     return View("NoProductsFound");
                 }
-
-              
             }
             else if (model.SearchRadio == "location")
             {
@@ -94,9 +88,6 @@ namespace Bangazon.Controllers
                     model.Products = (from product in model.Products
                                  where product.Location.ToLower().Contains(model.SearchTerms.ToLower())
                                   select product);
-
-                
-
                     return View(model);
                 }
                 else
@@ -190,19 +181,15 @@ namespace Bangazon.Controllers
                     viewModel.Product.Location = "";
                 }
                 
-
                 _context.Add(viewModel.Product);
 
                 await _context.SaveChangesAsync();
                 var routeID = viewModel.Product.ProductID;
                 return RedirectToAction("Details", "Products", new { @id = routeID });
-
-
             }
             ProductCreateViewModel newmodel = new ProductCreateViewModel(_context);
             return View(newmodel);
         }
-
       
         // GET: Products/Delete
         public async Task<IActionResult> Delete(int? id)
@@ -247,10 +234,6 @@ namespace Bangazon.Controllers
             {
                  return View(myprod);
             }
-
-         
-
-
         }
 
         // POST: Employees/Delete/5
