@@ -1,7 +1,25 @@
+@model Bangazon.Models.OrderViewModels.OrderHistoryViewModel
 
 @{
-    ViewData["Title"] = "OrderHistory";
+    ViewData["Title"] = "Order History";
 }
 
-<h2>OrderHistory</h2>
+<h2>Order History</h2>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Order #</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var order in Model.Orders)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => order.OrderID)</td>
+            <td>@Html.DisplayFor(modelItem => order.DateCreated)</td>
+            <td><button><a asp-action="OrderDetails" asp-route-id="@order.OrderID">Details</a></button></td>
+        </tr>
+    }
+</table>
