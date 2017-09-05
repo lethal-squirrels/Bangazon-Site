@@ -38,12 +38,17 @@ namespace Bangazon.Controllers
             {
                 return View("ShoppingCartEmpty");
             }
+     
             var shoppingCart = new ShoppingCart(_context, user, currentOrder);
-
 
             if (shoppingCart.Order == null)
             {
                 return NotFound();
+            }
+
+            if (shoppingCart.Products.Count() < 1)
+            {
+                return View("ShoppingCartEmpty");
             }
 
             return View(shoppingCart);
@@ -62,7 +67,6 @@ namespace Bangazon.Controllers
         }
 
         //GET: Orders/EditCart
-
         public async Task<IActionResult> EditCart(int orderID, int ProductID)
         {
             if (orderID == 0 || ProductID == 0)
@@ -72,14 +76,10 @@ namespace Bangazon.Controllers
             var prodOrder = await _context.ProductOrder
                             .FirstAsync(po => po.OrderID == orderID && po.ProductID == ProductID);
 
-
             _context.ProductOrder.Remove(prodOrder);
             await _context.SaveChangesAsync();
 
-
-
             return RedirectToAction("ShoppingCart");
-
         }
 
         // GET: Orders/Purchase/5
