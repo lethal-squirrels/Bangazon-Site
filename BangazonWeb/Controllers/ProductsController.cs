@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System;
 using System.IO;
 
+
 namespace Bangazon.Controllers
 {
     public class ProductsController : Controller
@@ -163,7 +164,7 @@ namespace Bangazon.Controllers
                 var user = await GetCurrentUserAsync();
                 viewModel.Product.User = user;
                 viewModel.Product.DateCreated = DateTime.Now;
-                
+
                 if (viewModel.ProductPhoto != null)
                 {
                     if (viewModel.ProductPhoto.Length > 0)
@@ -184,6 +185,7 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 var routeID = viewModel.Product.ProductID;
                 return RedirectToAction("Details", "Products", new { @id = routeID });
+
 
             }
             ProductCreateViewModel newmodel = new ProductCreateViewModel(_context);

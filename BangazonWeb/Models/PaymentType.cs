@@ -13,14 +13,17 @@ namespace Bangazon.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Date")]
         public DateTime DateCreated { get; set; }
 
         [Required]
         [StringLength(20)]
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
         [Required]
         [StringLength(20)]
+        [Display(Name = "Account Number")]
         public string AccountNumber { get; set; }
 
         [Required]
