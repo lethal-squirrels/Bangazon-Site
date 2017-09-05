@@ -13,7 +13,7 @@
     {
     <div class="col-md-4">
         <div class="thumbnail">
-                <img src="http://www.seriouseats.com/images/2012/07/20120730-chick-fil-a-food-lab-27.jpg" alt="Lights" style="width:100%">
+                <img src="@Html.DisplayFor(modelItem => item.ImgPath)" style="width:100%">
                 <div class="caption">
                     <h3><a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductID"> @Html.DisplayFor(modelItem => item.Name)</a></h3>
                     <p>@Html.DisplayFor(modelItem => item.Description)</p>

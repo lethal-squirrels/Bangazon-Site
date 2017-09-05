@@ -72,3 +72,7 @@ textarea {
 .productTypeHeader {
     font-size: 1.6em;
 }
+
+.img-thumbnail {
+    max-width: 50%;
+}
