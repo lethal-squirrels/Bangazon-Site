@@ -130,12 +130,21 @@ namespace Bangazon.Controllers
             return View("ShoppingCartEmpty");
         }
 
+        // GET Orders/completeOrder/6
+        public async Task<IActionResult> CompleteOrder()
+        {
+            // Create new instance of the view model
+            CompleteOrder model = new CompleteOrder(_context, await GetCurrentUserAsync());
+
+            return View(model);
+        }
+
         // POST: Orders/???
         [HttpPost]
-        public async Task<IActionResult> CompleteOrder (int? orderid)
+        public async Task<IActionResult> CompleteOrderConfirmed (CompleteOrder viewModel)
         {
             var user = await GetCurrentUserAsync();
-            var currentOrder = _context.Order.SingleOrDefault(o => o.PaymentType == null && o.User.Id == user.Id);
+            var currentOrder = await _context.Order.Include("LineItems.Product").SingleOrDefaultAsync(o => o.PaymentType == null && o.User.Id == user.Id);
             if (currentOrder == null || currentOrder.LineItems == null)
             {
                 return NotFound();
@@ -143,19 +152,22 @@ namespace Bangazon.Controllers
             foreach (var item in currentOrder.LineItems)
             {
                 item.Product.Quantity = item.Product.Quantity - 1;
-                _context.Product.Add(item.Product);
+                _context.Product.Update(item.Product);
             }
-            //currentOrder.PaymentType = selectedpaymentType (Get this from arguments or viewmodel?)
-            _context.Order.Add(currentOrder);
+            var selectedPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.PaymentTypeID == viewModel.Order.PaymentTypeID);
+            currentOrder.PaymentType = selectedPaymentType;
+            _context.Order.Update(currentOrder);
             await _context.SaveChangesAsync();
-            var orderID = new { orderID = orderid };
+            var orderID = new { orderID = currentOrder.OrderID };
             return RedirectToAction("OrderCompleted", orderID);
         }
 
-        public async Task<IActionResult> OrderCompleted (int? id) 
+        //GET Orders/OrderCompleted/6
+
+        public async Task<IActionResult> OrderCompleted (int? orderid) 
         {
             var user = await GetCurrentUserAsync();
-            var viewModel = new OrderCompleteViewModel(_context, user, id);
+            var viewModel = new OrderCompletedViewModel(_context, user, orderid);
             return View(viewModel);
         }
 
