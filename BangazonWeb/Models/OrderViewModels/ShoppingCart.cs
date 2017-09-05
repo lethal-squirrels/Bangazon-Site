@@ -19,6 +19,10 @@ namespace Bangazon.Models.OrderViewModels
 
         public int ProductsCount { get; set; }
 
+        public Product Product { get; set; }
+
+        public ShoppingCart() { }
+
         public ShoppingCart(ApplicationDbContext _context, ApplicationUser user, Order currentOrder)
         {
             Order = currentOrder;

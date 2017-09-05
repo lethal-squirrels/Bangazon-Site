@@ -61,6 +61,27 @@ namespace Bangazon.Controllers
             return order;
         }
 
+        //GET: Orders/EditCart
+
+        public async Task<IActionResult> EditCart(int orderID, int ProductID)
+        {
+            if (orderID == 0 || ProductID == 0)
+            {
+                return View("ShoppingCartEmpty");
+            }
+            var prodOrder = await _context.ProductOrder
+                            .FirstAsync(po => po.OrderID == orderID && po.ProductID == ProductID);
+
+
+            _context.ProductOrder.Remove(prodOrder);
+            await _context.SaveChangesAsync();
+
+
+
+            return RedirectToAction("ShoppingCart");
+
+        }
+
         // GET: Orders/Purchase/5
         [Authorize]
         public async Task<IActionResult> Purchase(int? id)
@@ -87,7 +108,7 @@ namespace Bangazon.Controllers
             productOrder.Product = await _context.Product.SingleOrDefaultAsync(p => p.ProductID == id);
             _context.Add(productOrder);
             await _context.SaveChangesAsync();
-            
+
             var purchase = new Purchase();
             purchase.Product = productOrder.Product;
             purchase.Order = order;
@@ -141,7 +162,7 @@ namespace Bangazon.Controllers
 
         // POST: Orders/???
         [HttpPost]
-        public async Task<IActionResult> CompleteOrderConfirmed (CompleteOrder viewModel)
+        public async Task<IActionResult> CompleteOrderConfirmed(CompleteOrder viewModel)
         {
             var user = await GetCurrentUserAsync();
             var currentOrder = await _context.Order.Include("LineItems.Product").SingleOrDefaultAsync(o => o.PaymentType == null && o.User.Id == user.Id);
@@ -164,7 +185,7 @@ namespace Bangazon.Controllers
 
         //GET Orders/OrderCompleted/6
 
-        public async Task<IActionResult> OrderCompleted (int? orderid) 
+        public async Task<IActionResult> OrderCompleted(int? orderid)
         {
             var user = await GetCurrentUserAsync();
             var viewModel = new OrderCompletedViewModel(_context, user, orderid);
