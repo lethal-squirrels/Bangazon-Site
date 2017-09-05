@@ -13,11 +13,11 @@ The Bangazon web application was built using:
 *  Theming using [Bootstrap](https://go.microsoft.com/fwlink/?LinkID=398939)
 
 ## To run this application:
-	1. Clone this repo to a local directory
-	1. `cd` to your local directory
-	1. Open the `Bangazon.sln` file in Visual Studio
-	1. Using the Package Manager Console in Visual Studio, run `update-database`
-	1. Run the program on your local host 
+1.  Clone this repo to a local directory
+1.  `cd` to your local directory
+1.  Open the `Bangazon.sln` file in Visual Studio
+1.  Using the Package Manager Console in Visual Studio, run `update-database`
+1.  Run the program on your local host 
 
 ## Contributors 
 *  [Chaz Henricks](https://github.com/chazhenricks)
