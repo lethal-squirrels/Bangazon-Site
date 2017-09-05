@@ -25,7 +25,9 @@
     <div class="col-md-2">@Html.DisplayFor(model => model.Product.DateCreated)</div>
     @if (Context.User.Identity.Name != Model.Product.User.UserName)
     {
+
         <div class="col-md-2"><a class="btn btn-success" asp-controller="Orders" asp-action="Purchase" asp-route-id="@Model.Product.ProductID">Add to Order</a></div>
+
     }
 </div>
 &nbsp;&nbsp;
