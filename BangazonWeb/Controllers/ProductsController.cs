@@ -72,8 +72,11 @@ namespace Bangazon.Controllers
                 if (model.Products != null)
                 {
                     model.Products = (from product in model.Products
-                                  where product.Name == model.SearchTerms
+
+                                  where product.Name.ToLower().Contains(model.SearchTerms.ToLower())
+
                                   select product);
+               
 
                     return View(model);
                 }
@@ -89,8 +92,10 @@ namespace Bangazon.Controllers
                 if (model.Products != null)
                 {
                     model.Products = (from product in model.Products
-                                  where product.Location == model.SearchTerms
+                                 where product.Location.ToLower().Contains(model.SearchTerms.ToLower())
                                   select product);
+
+                
 
                     return View(model);
                 }
@@ -179,7 +184,13 @@ namespace Bangazon.Controllers
                         viewModel.Product.ImgPath = dbPath;
                     }
                 }
+
+                if (viewModel.Product.Location == null)
+                {
+                    viewModel.Product.Location = "";
+                }
                 
+
                 _context.Add(viewModel.Product);
 
                 await _context.SaveChangesAsync();
