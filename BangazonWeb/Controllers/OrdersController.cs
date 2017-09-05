@@ -86,6 +86,14 @@ namespace Bangazon.Controllers
             return order;
         }
 
+        //POST: Orders/EditCart
+        [HttpPost]
+        public IActionResult EditCart(ShoppingCart model)
+        {
+
+            return RedirectToAction("ShoppingCart");
+        }
+
         // GET: Orders/Purchase/5
         [Authorize]
         public async Task<IActionResult> Purchase(int? id)

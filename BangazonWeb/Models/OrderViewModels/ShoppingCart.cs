@@ -17,6 +17,10 @@ namespace Bangazon.Models.OrderViewModels
 
         public IEnumerable<Product> Products { get; set; }
 
+        public Product Product { get; set; }
+
+        public ShoppingCart() { }
+
         public ShoppingCart(ApplicationDbContext _context, ApplicationUser user, Order currentOrder)
         {
             Order = currentOrder;
