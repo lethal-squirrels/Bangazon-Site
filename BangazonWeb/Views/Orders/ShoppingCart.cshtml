@@ -33,7 +33,7 @@
         </tr>
     }
     <tr>
-        <td>Total Items: @Model.Products.Count()</td>
+        <td>Total Items: @Model.ProductsCount</td>
         <td></td>
         <td>Order Total:</td>
         <td>@String.Format("{0:C}", @Model.Products.Sum(p => p.Price))</td>
@@ -41,8 +41,6 @@
 
 </table>
 <div>
-
-    <button class="btn btn-success" asp-action="CompleteOrder" asp-route-id="@Model.Order.OrderID">Complete Order</button>
-
+    <a class="btn btn-success" asp-action="CompleteOrder" asp-route-id="@Model.Order.OrderID">Complete Order</a>
     <a asp-action="Delete" asp-route-id="@Model.Order.OrderID">Cancel Order</a>
 </div>

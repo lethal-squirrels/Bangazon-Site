@@ -41,7 +41,6 @@ namespace Bangazon.Controllers
      
             var shoppingCart = new ShoppingCart(_context, user, currentOrder);
 
-
             if (shoppingCart.Order == null)
             {
                 return NotFound();
@@ -51,7 +50,6 @@ namespace Bangazon.Controllers
             {
                 return View("ShoppingCartEmpty");
             }
-
 
             return View(shoppingCart);
         }
@@ -69,24 +67,19 @@ namespace Bangazon.Controllers
         }
 
         //GET: Orders/EditCart
-       
         public async Task<IActionResult> EditCart(int orderID, int ProductID)
         {
-            if(orderID == 0 || ProductID == 0)
+            if (orderID == 0 || ProductID == 0)
             {
                 return View("ShoppingCartEmpty");
             }
             var prodOrder = await _context.ProductOrder
                             .FirstAsync(po => po.OrderID == orderID && po.ProductID == ProductID);
 
-
             _context.ProductOrder.Remove(prodOrder);
             await _context.SaveChangesAsync();
 
-
-
             return RedirectToAction("ShoppingCart");
-            
         }
 
         // GET: Orders/Purchase/5
@@ -115,7 +108,7 @@ namespace Bangazon.Controllers
             productOrder.Product = await _context.Product.SingleOrDefaultAsync(p => p.ProductID == id);
             _context.Add(productOrder);
             await _context.SaveChangesAsync();
-            
+
             var purchase = new Purchase();
             purchase.Product = productOrder.Product;
             purchase.Order = order;
@@ -156,6 +149,47 @@ namespace Bangazon.Controllers
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return View("ShoppingCartEmpty");
+        }
+
+        // GET Orders/completeOrder/6
+        public async Task<IActionResult> CompleteOrder()
+        {
+            // Create new instance of the view model
+            CompleteOrder model = new CompleteOrder(_context, await GetCurrentUserAsync());
+
+            return View(model);
+        }
+
+        // POST: Orders/???
+        [HttpPost]
+        public async Task<IActionResult> CompleteOrderConfirmed(CompleteOrder viewModel)
+        {
+            var user = await GetCurrentUserAsync();
+            var currentOrder = await _context.Order.Include("LineItems.Product").SingleOrDefaultAsync(o => o.PaymentType == null && o.User.Id == user.Id);
+            if (currentOrder == null || currentOrder.LineItems == null)
+            {
+                return NotFound();
+            }
+            foreach (var item in currentOrder.LineItems)
+            {
+                item.Product.Quantity = item.Product.Quantity - 1;
+                _context.Product.Update(item.Product);
+            }
+            var selectedPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.PaymentTypeID == viewModel.Order.PaymentTypeID);
+            currentOrder.PaymentType = selectedPaymentType;
+            _context.Order.Update(currentOrder);
+            await _context.SaveChangesAsync();
+            var orderID = new { orderID = currentOrder.OrderID };
+            return RedirectToAction("OrderCompleted", orderID);
+        }
+
+        //GET Orders/OrderCompleted/6
+
+        public async Task<IActionResult> OrderCompleted(int? orderid)
+        {
+            var user = await GetCurrentUserAsync();
+            var viewModel = new OrderCompletedViewModel(_context, user, orderid);
+            return View(viewModel);
         }
 
         private bool OrderExists(int id)
