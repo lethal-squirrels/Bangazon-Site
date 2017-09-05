@@ -28,7 +28,8 @@
             </td>
             <td>@Html.DisplayFor(modelItem => product.Description)</td>
             <td>@Html.DisplayFor(modelItem => product.Quantity)</td>
-            <td>@Html.DisplayFor(modelItem => product.Price)</td>
+            <td>@Html.DisplayFor(modelItem => product.Price) </td>
+           <td> <a asp-controller="Orders" asp-action="EditCart" asp-route-orderID="@Model.Order.OrderID" asp-route-ProductID="@product.ProductID">Remove Item</a></td>
         </tr>
     }
     <tr>

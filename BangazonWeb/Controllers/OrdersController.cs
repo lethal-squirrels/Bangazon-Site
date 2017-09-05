@@ -61,6 +61,27 @@ namespace Bangazon.Controllers
             return order;
         }
 
+        //GET: Orders/EditCart
+       
+        public async Task<IActionResult> EditCart(int orderID, int ProductID)
+        {
+            if(orderID == 0 || ProductID == 0)
+            {
+                return View("ShoppingCartEmpty");
+            }
+            var prodOrder = await _context.ProductOrder
+                            .FirstAsync(po => po.OrderID == orderID && po.ProductID == ProductID);
+
+
+            _context.ProductOrder.Remove(prodOrder);
+            await _context.SaveChangesAsync();
+
+
+
+            return RedirectToAction("ShoppingCart");
+            
+        }
+
         // GET: Orders/Purchase/5
         [Authorize]
         public async Task<IActionResult> Purchase(int? id)
