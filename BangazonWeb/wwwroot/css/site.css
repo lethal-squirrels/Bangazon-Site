@@ -1,11 +1,13 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
+    padding-top: 25px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -49,7 +51,6 @@ textarea {
     }
 }
 
-
 .nav_radio_text {
     color: lightgrey;
 }
@@ -58,4 +59,16 @@ textarea {
     display: none;
 }
 
+.navbar-fixed-top {
+    background-color: #2D013A;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+}
 
+.navbar-brand {
+    font-size: 2em;
+}
+
+.productTypeHeader {
+    font-size: 1.6em;
+}

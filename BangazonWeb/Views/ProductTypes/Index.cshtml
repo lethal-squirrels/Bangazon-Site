@@ -9,7 +9,7 @@
 @foreach (var item in Model.productTypeCounts)
 {
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 productTypeHeader">
             <a asp-controller="ProductTypes" asp-action="Details" asp-route-id="@item.ProductTypeID">
                 @Html.DisplayFor(modelItem => item.TypeName) (@Html.DisplayFor(modelItem => item.ProductCount))
             </a>
@@ -18,7 +18,7 @@
     @foreach (var product in item.Products)
     {
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9 col-md-offset-1">
                 @product.Name
             </div>
             <div class="row">
