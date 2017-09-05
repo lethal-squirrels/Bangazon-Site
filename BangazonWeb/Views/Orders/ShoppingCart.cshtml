@@ -43,5 +43,5 @@
 </table>
 <div>
     <button asp-action="CompleteOrder" asp-route-id="@Model.Order.OrderID">Complete Order</button>
-    <button asp-action="CancelOrder" asp-route-id="@Model.Order.OrderID">Cancel Order</button>
+    <a asp-action="Delete" asp-route-id="@Model.Order.OrderID">Cancel Order</a>
 </div>
