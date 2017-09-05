@@ -50,7 +50,9 @@ namespace Bangazon.Controllers
                 if (model.Products != null)
                 {
                     model.Products = (from product in model.Products
+
                                   where product.Name.ToLower().Contains(model.SearchTerms.ToLower())
+
                                   select product);
 
                     return View(model);
