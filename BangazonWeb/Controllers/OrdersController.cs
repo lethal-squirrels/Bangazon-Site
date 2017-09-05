@@ -38,12 +38,17 @@ namespace Bangazon.Controllers
             {
                 return View("ShoppingCartEmpty");
             }
+     
             var shoppingCart = new ShoppingCart(_context, user, currentOrder);
 
 
             if (shoppingCart.Order == null)
             {
                 return NotFound();
+            }
+            if (shoppingCart.Products.Count() < 1)
+            {
+                return View("ShoppingCartEmpty");
             }
 
             return View(shoppingCart);
