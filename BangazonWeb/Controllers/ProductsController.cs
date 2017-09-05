@@ -248,7 +248,7 @@ namespace Bangazon.Controllers
             var prod = await _context.Product.SingleOrDefaultAsync(m => m.ProductID == id);
             _context.Product.Remove(prod);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("MyIndex");
         }
 
         public async Task<IActionResult> Types()
