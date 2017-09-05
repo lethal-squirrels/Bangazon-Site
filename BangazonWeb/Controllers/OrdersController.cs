@@ -140,6 +140,7 @@ namespace Bangazon.Controllers
         }
 
         // POST: Orders/???
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CompleteOrderConfirmed (CompleteOrder viewModel)
         {
