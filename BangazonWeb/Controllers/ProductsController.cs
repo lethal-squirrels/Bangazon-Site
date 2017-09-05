@@ -194,7 +194,8 @@ namespace Bangazon.Controllers
         // GET: Products/Delete
         public async Task<IActionResult> Delete(int? id)
         {
-
+            // Create new instance of the view model
+            ProductListViewModel model = new ProductListViewModel();
             if (id == null)
             {
                 return NotFound();
@@ -215,7 +216,7 @@ namespace Bangazon.Controllers
 
                 if (proddel == null)
                 {
-                    return NotFound();
+                    return View("NoDelete");
                 }
                 else
                 {
@@ -231,9 +232,7 @@ namespace Bangazon.Controllers
             }
             else
             {
-                
-
-                return View(myprod);
+                 return View(myprod);
             }
 
          

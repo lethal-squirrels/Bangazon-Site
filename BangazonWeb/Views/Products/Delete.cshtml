@@ -43,30 +43,13 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImgPath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImgPath)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProductType.Label)
-        </dd>
+        
     </dl>
     
     <form asp-action="Delete">
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
+            <a asp-action="MyIndex">Back to List</a>
         </div>
     </form>
 </div>
