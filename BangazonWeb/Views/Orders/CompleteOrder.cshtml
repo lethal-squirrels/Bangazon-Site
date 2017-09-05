@@ -1,4 +1,4 @@
-﻿@model Bangazon.Models.OrderViewModels.CompleteOrder
+﻿@model Bangazon.Models.OrderViewModels.CompleteOrderViewModel
 
 @{
     ViewData["Title"] = "Complete Order";
@@ -6,17 +6,17 @@
 <h3>Order @Model.Order.OrderID</h3>
 <hr />
 <h3>Choose a Payment Type</h3>
-<form asp-action="CompleteOrderConfirmed">
+<form asp-action="CompleteOrder">
     <div class="col-md-10">
         @Html.DropDownList(
-                    "Order.PaymentTypeID",
+                    "SelectedPaymentTypeId",
                     @Model.PaymentTypeId,
                     new
                     {
                         @name = "Order.PaymentTypeID"
                     }
                 )
-        @Html.ValidationMessageFor(model => model.Order.PaymentTypeID, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.SelectedPaymentTypeId, "", new { @class = "text-danger" })
     </div>
     <input type="submit" value="Complete Order" class="btn btn-success" />
 </form>

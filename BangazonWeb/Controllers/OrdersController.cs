@@ -39,7 +39,7 @@ namespace Bangazon.Controllers
                 return View("ShoppingCartEmpty");
             }
      
-            var shoppingCart = new ShoppingCart(_context, user, currentOrder);
+            var shoppingCart = new ShoppingCartViewModel(_context, user, currentOrder);
 
             if (shoppingCart.Order == null)
             {
@@ -109,7 +109,7 @@ namespace Bangazon.Controllers
             _context.Add(productOrder);
             await _context.SaveChangesAsync();
 
-            var purchase = new Purchase();
+            var purchase = new PurchaseViewModel();
             purchase.Product = productOrder.Product;
             purchase.Order = order;
 
@@ -130,7 +130,7 @@ namespace Bangazon.Controllers
             {
                 return NotFound();
             }
-            var shoppingCart = new ShoppingCart(_context, user, order);
+            var shoppingCart = new ShoppingCartViewModel(_context, user, order);
 
             return View(shoppingCart);
         }
@@ -155,32 +155,37 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> CompleteOrder()
         {
             // Create new instance of the view model
-            CompleteOrder model = new CompleteOrder(_context, await GetCurrentUserAsync());
+            CompleteOrderViewModel model = new CompleteOrderViewModel(_context, await GetCurrentUserAsync());
 
             return View(model);
         }
 
         // POST: Orders/???
         [HttpPost]
-        public async Task<IActionResult> CompleteOrderConfirmed(CompleteOrder viewModel)
+        public async Task<IActionResult> CompleteOrder(CompleteOrderViewModel viewModel)
         {
-            var user = await GetCurrentUserAsync();
-            var currentOrder = await _context.Order.Include("LineItems.Product").SingleOrDefaultAsync(o => o.PaymentType == null && o.User.Id == user.Id);
-            if (currentOrder == null || currentOrder.LineItems == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var user = await GetCurrentUserAsync();
+                var currentOrder = await _context.Order.Include("LineItems.Product").SingleOrDefaultAsync(o => o.PaymentType == null && o.User.Id == user.Id);
+                if (currentOrder == null || currentOrder.LineItems == null)
+                {
+                    return NotFound();
+                }
+                foreach (var item in currentOrder.LineItems)
+                {
+                    item.Product.Quantity = item.Product.Quantity - 1;
+                    _context.Product.Update(item.Product);
+                }
+                var selectedPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.PaymentTypeID == viewModel.SelectedPaymentTypeId);
+                currentOrder.PaymentType = selectedPaymentType;
+                _context.Order.Update(currentOrder);
+                await _context.SaveChangesAsync();
+                var orderID = new { orderID = currentOrder.OrderID };
+                return RedirectToAction("OrderCompleted", orderID);
             }
-            foreach (var item in currentOrder.LineItems)
-            {
-                item.Product.Quantity = item.Product.Quantity - 1;
-                _context.Product.Update(item.Product);
-            }
-            var selectedPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.PaymentTypeID == viewModel.Order.PaymentTypeID);
-            currentOrder.PaymentType = selectedPaymentType;
-            _context.Order.Update(currentOrder);
-            await _context.SaveChangesAsync();
-            var orderID = new { orderID = currentOrder.OrderID };
-            return RedirectToAction("OrderCompleted", orderID);
+            CompleteOrderViewModel model = new CompleteOrderViewModel(_context, await GetCurrentUserAsync());
+            return View(model);
         }
 
         //GET Orders/OrderCompleted/6
