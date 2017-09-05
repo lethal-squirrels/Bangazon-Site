@@ -143,6 +143,7 @@ namespace Bangazon.Controllers
                 viewModel.Product.User = user;
                 viewModel.Product.DateCreated = DateTime.Now;
                 
+
                 if (viewModel.ProductPhoto != null)
                 {
                     if (viewModel.ProductPhoto.Length > 0)
