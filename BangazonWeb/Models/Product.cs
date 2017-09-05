@@ -47,6 +47,8 @@ namespace Bangazon.Models
 
         [Display(Name ="Line Items")]
         public virtual ICollection<ProductOrder> LineItems { get; set; }
+
+       
         
 
        

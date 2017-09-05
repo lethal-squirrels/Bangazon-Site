@@ -1,35 +1,54 @@
-@model Bangazon.Models.Order
+@model Bangazon.Models.OrderViewModels.ShoppingCart
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Cancel Order";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<br />
+<br />
+<h3>Are you sure you want to cancel this Order?</h3>
 <div>
-    <h4>Order</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <input type="hidden" asp-for="OrderID" />
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaymentType.AccountNumber)
-        </dd>
-    </dl>
+    <input type="hidden" asp-for="Order.OrderID" />
+    <h3>Order @Model.Order.OrderID</h3>
+    <hr />
+    <h4>Products</h4>
+    <hr />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.ProductID">
+                        @Html.DisplayFor(modelItem => product.Name)
+                    </a>
+                </td>
+                <td>@Html.DisplayFor(modelItem => product.Description)</td>
+                <td>@Html.DisplayFor(modelItem => product.Quantity)</td>
+                <td>@Html.DisplayFor(modelItem => product.Price)</td>
+            </tr>
+        }
+        <tr>
+            <td>Total Items: @Model.Products.Count()</td>
+            <td></td>
+            <td>Order Total:</td>
+            <td>@String.Format("{0:C}", @Model.Products.Sum(p => p.Price))</td>
+        </tr>
+
+    </table>
     
     <form asp-action="Delete">
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Cancel" class="btn btn-danger" /> |
+            <a asp-action="ShoppingCart">Back to Shopping Cart</a>
         </div>
     </form>
 </div>

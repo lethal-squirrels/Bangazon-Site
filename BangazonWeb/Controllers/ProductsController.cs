@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System;
 using System.IO;
 
+
 namespace Bangazon.Controllers
 {
     public class ProductsController : Controller
@@ -37,6 +38,27 @@ namespace Bangazon.Controllers
             // Set the properties of the view model
             model.Products = await _context.Product.ToListAsync();
             return View(model);
+        }
+
+        public async Task<IActionResult> MyIndex()
+        {
+           // Create new instance of the view model
+           ProductListViewModel model = new ProductListViewModel();
+
+           // Get current user
+           var user = await GetCurrentUserAsync();
+           var my_prods = await _context.Product.Where(p => p.User.Id == user.Id).ToListAsync();
+
+               if (my_prods != null)
+               {
+                    model.Products = my_prods;
+                    return View(model);
+                }
+               else
+               {
+                  return View("NoProductsFound");
+               }
+
         }
 
         //POST: Products/Search
@@ -147,7 +169,6 @@ namespace Bangazon.Controllers
                 var user = await GetCurrentUserAsync();
                 viewModel.Product.User = user;
                 viewModel.Product.DateCreated = DateTime.Now;
-                
 
                 if (viewModel.ProductPhoto != null)
                 {
@@ -176,29 +197,59 @@ namespace Bangazon.Controllers
                 var routeID = viewModel.Product.ProductID;
                 return RedirectToAction("Details", "Products", new { @id = routeID });
 
+
             }
             ProductCreateViewModel newmodel = new ProductCreateViewModel(_context);
             return View(newmodel);
         }
 
+      
         // GET: Products/Delete
         public async Task<IActionResult> Delete(int? id)
         {
+            // Create new instance of the view model
+            ProductListViewModel model = new ProductListViewModel();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var producttobedeleted = await _context.Product
-                .Include(p => p.LineItems.Select(li => li.Order).Where(o => o.PaymentTypeID == null))
-                .SingleOrDefaultAsync(p => p.ProductID == id);
+            var myprod = await _context.Product.SingleOrDefaultAsync(P => P.ProductID == id);
 
-            if (producttobedeleted == null)
+            var checkprod = await _context.ProductOrder.FirstOrDefaultAsync(po => po.ProductID == id);
+            if (checkprod != null)
             {
-                return View(producttobedeleted);
+                var proddel = await (from p in _context.Product
+                                     join po in _context.ProductOrder
+                                     on p.ProductID equals po.ProductID
+                                     join oo in _context.Order
+                                     on po.OrderID equals oo.OrderID
+                                     where oo.PaymentTypeID == null
+                                     select p).SingleOrDefaultAsync(p => p.ProductID == id);
+
+                if (proddel == null)
+                {
+                    return View("NoDelete");
+                }
+                else
+                {
+                    var mypo = await _context.ProductOrder.Where(po => po.ProductID == id).ToListAsync();
+                    foreach (var item in mypo)
+                    {
+                        _context.ProductOrder.Remove(item);
+                        await _context.SaveChangesAsync();
+                    }
+                    return View(proddel);
+                }
+
+            }
+            else
+            {
+                 return View(myprod);
             }
 
-            return View(producttobedeleted);
+         
+
 
         }
 
@@ -210,7 +261,7 @@ namespace Bangazon.Controllers
             var prod = await _context.Product.SingleOrDefaultAsync(m => m.ProductID == id);
             _context.Product.Remove(prod);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("MyIndex");
         }
 
         public async Task<IActionResult> Types()

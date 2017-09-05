@@ -34,5 +34,6 @@ namespace Bangazon.Data
 
         public DbSet<Bangazon.Models.ProductOrder> ProductOrder { get; set; }
 
+
     }
 }

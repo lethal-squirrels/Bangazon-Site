@@ -1,0 +1,18 @@
+@model Bangazon.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Sorry you cannot delete this product as it is on a completed order.</h3>
+<div>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            
+            <a asp-action="MyIndex">Back to List</a>
+        </div>
+    </form>
+</div>
