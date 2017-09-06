@@ -1,7 +1,11 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+<<<<<<< HEAD
+    font-family: 'Josefin Sans', sans-serif;
+=======
     font-family: Arial, Helvetica, sans-serif;
+>>>>>>> be59383f0efbcc807e688222f0fba5ec6281122f
 }
 
 /* Wrapping element */

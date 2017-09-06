@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bangazon.Models.OrderViewModels
 {
-    public class CompleteOrder
+    public class CompleteOrderViewModel
     {
         public List<SelectListItem> PaymentTypeId { get; set; }
 
@@ -21,9 +21,12 @@ namespace Bangazon.Models.OrderViewModels
         [Display(Name = "Order Total")]
         public double OrderTotal { get; set; }
 
-        public CompleteOrder(){}
+        [Range(1, 10000000, ErrorMessage = "Please choose a payment type.")]
+        public int SelectedPaymentTypeId { get; set; }
 
-        public CompleteOrder(ApplicationDbContext ctx, ApplicationUser user)
+        public CompleteOrderViewModel(){}
+
+        public CompleteOrderViewModel(ApplicationDbContext ctx, ApplicationUser user)
         {
             User = user;
 

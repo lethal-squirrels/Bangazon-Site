@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bangazon.Models.OrderViewModels
 {
-    public class ShoppingCart
+    public class ShoppingCartViewModel
     {
         public ApplicationUser User { get; set; }
 
@@ -19,9 +19,9 @@ namespace Bangazon.Models.OrderViewModels
 
         public int ProductsCount { get; set; }
 
-        public ShoppingCart() { }
+        public ShoppingCartViewModel() { }
 
-        public ShoppingCart(ApplicationDbContext _context, ApplicationUser user, Order currentOrder)
+        public ShoppingCartViewModel(ApplicationDbContext _context, ApplicationUser user, Order currentOrder)
         {
             Order = currentOrder;
             User = user;
