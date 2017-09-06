@@ -13,7 +13,7 @@
     {
     <div class="col-md-4">
         <div class="thumbnail">
-                <img src="@Html.DisplayFor(modelItem => item.ImgPath)" style="max-height:270px">
+                <img src="@Html.DisplayFor(modelItem => item.ImgPath)" style="height:270px">
                 <div class="caption">
                     <h3><a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductID"> @Html.DisplayFor(modelItem => item.Name)</a></h3>
                     <p>@Html.DisplayFor(modelItem => item.Description)</p>
