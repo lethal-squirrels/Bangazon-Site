@@ -123,6 +123,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Banana",
                             Description = "Yummy and yellow",
+                            ImgPath = "/images/bananas.jpg",
                             Price = .99,
                             Quantity = 15,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Grocery").ProductTypeID,
@@ -133,6 +134,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "40 inch rims",
                             Description = "Only for Big Ballers",
+                            ImgPath = "/images/rims.jpg",
                             Price = 55,
                             Quantity = 2,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Auto").ProductTypeID,
@@ -143,6 +145,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Roof shingles",
                             Description = "Take cover",
+                            ImgPath = "/images/shingles.jpg",
                             Price = 4,
                             Quantity = 150,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Home").ProductTypeID,
@@ -154,6 +157,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Bath mat",
                             Description = "Cold floors are the worst",
+                            ImgPath = "/images/bath-mat.jpg",
                             Price = 25.50,
                             Quantity = 9,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Home").ProductTypeID,
@@ -164,6 +168,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "King size bed",
                             Description = "Fit for a king. Or whatever.",
+                            ImgPath = "/images/bed.jpg",
                             Price = 1200,
                             Quantity = 1,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Home").ProductTypeID,
@@ -174,6 +179,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Nintendo 64",
                             Description = "Obviously the best gaming system",
+                            ImgPath = "/images/nintendo.jpg",
                             Price = 75,
                             Quantity = 3,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Electronics").ProductTypeID,
@@ -185,6 +191,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Shoes",
                             Description = "They're shoes. They shoe your feet.",
+                            ImgPath = "/images/shoes.jpg",
                             Price = 5,
                             Quantity = 6,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Clothing").ProductTypeID,
@@ -195,6 +202,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Fruit roll ups",
                             Description = "They ship better than bananas, trust me",
+                            ImgPath = "/images/fruit-roll-up.jpg",
                             Price = 1.50,
                             Quantity = 1000,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Grocery").ProductTypeID,
@@ -205,6 +213,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Doritos",
                             Description = "Yummy and orange",
+                            ImgPath = "/images/doritos.jpg",
                             Price = 3.75,
                             Quantity = 15,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Grocery").ProductTypeID,
@@ -215,6 +224,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Headphones",
                             Description = "Hear things better",
+                            ImgPath = "/images/headphones.jpg",
                             Price = 15.15,
                             Quantity = 3,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Electronics").ProductTypeID,
@@ -225,6 +235,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Comforter",
                             Description = "For the king size bed. Or whatever.",
+                            ImgPath = "/images/comforter.jpg",
                             Price = 67,
                             Quantity = 2,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Home").ProductTypeID,
@@ -235,6 +246,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Semi-truck",
                             Description = "Drive in style",
+                            ImgPath = "/images/semi-truck.jpg",
                             Price = 150000,
                             Quantity = 1,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Auto").ProductTypeID,
@@ -245,6 +257,7 @@ namespace Bangazon.Data
                         new Product {
                             Name = "Socks",
                             Description = "They go with your shoes",
+                            ImgPath = "/images/socks.jpg",
                             Price = 4.75,
                             Quantity = 1200,
                             ProductTypeID = context.ProductType.Single(t => t.Label == "Clothing").ProductTypeID,

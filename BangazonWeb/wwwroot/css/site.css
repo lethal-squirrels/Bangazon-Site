@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Wrapping element */
@@ -62,7 +62,7 @@ textarea {
 .navbar-fixed-top {
     background-color: #2D013A;
     color: white;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .navbar-brand {
@@ -71,4 +71,8 @@ textarea {
 
 .productTypeHeader {
     font-size: 1.6em;
+}
+
+.img-thumbnail {
+    max-width: 50%;
 }
